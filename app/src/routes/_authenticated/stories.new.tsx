@@ -1,0 +1,569 @@
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
+import { useServerFn } from "@tanstack/react-start";
+import { useState } from "react";
+import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/hooks/use-auth";
+import { checkStorySafety, generateStory } from "@/lib/studio.functions";
+import { AGE_RANGES, ART_STYLES, THEMES, TONES, VOICES } from "@/lib/catalog";
+import { PageHeader } from "@/components/PageHeader";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import { cn } from "@/lib/utils";
+import {
+  BookOpenText,
+  Check,
+  Clock3,
+  FileText,
+  LockKeyhole,
+  RefreshCw,
+  ShieldAlert,
+  ShieldCheck,
+  Sparkles,
+} from "lucide-react";
+import { ArtDirectionPicker } from "@/components/ArtDirectionPicker";
+import { ART_DIRECTION_BOARDS } from "@/lib/art-direction";
+
+export const Route = createFileRoute("/_authenticated/stories/new")({
+  validateSearch: (search: Record<string, unknown>): { idea?: string; age?: string } => ({
+    ...(typeof search["idea"] === "string" ? { idea: search["idea"] } : {}),
+    ...(typeof search["age"] === "string" ? { age: search["age"] } : {}),
+  }),
+  head: () => ({
+    meta: [
+      { title: "New story — CyliaTales" },
+      { name: "robots", content: "noindex" },
+      {
+        name: "description",
+        content: "Choose reader age, cast, art direction and narrator for a new original book.",
+      },
+      { property: "og:title", content: "New story — CyliaTales" },
+      {
+        property: "og:description",
+        content: "Choose reader age, cast, art direction and narrator for a new original book.",
+      },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
+    ],
+  }),
+  component: NewStory,
+});
+
+function Chip({
+  on,
+  children,
+  onClick,
+}: {
+  on: boolean;
+  children: React.ReactNode;
+  onClick: () => void;
+}) {
+  return (
+    <Button
+      variant="outline"
+      type="button"
+      onClick={onClick}
+      className={cn(
+        "rounded-full border px-3 py-1.5 text-sm transition",
+        on ? "border-primary bg-primary text-primary-foreground" : "bg-card hover:bg-secondary",
+      )}
+    >
+      {children}
+    </Button>
+  );
+}
+
+function NewStory() {
+  const { idea: seededIdea, age: seededAge } = Route.useSearch();
+  const { user } = useAuth();
+  const nav = useNavigate();
+  const gen = useServerFn(generateStory);
+  const checkSafety = useServerFn(checkStorySafety);
+  const [idea, setIdea] = useState(seededIdea ?? "");
+  const [age, setAge] = useState<string>(
+    AGE_RANGES.some((item) => item.id === seededAge) ? seededAge! : AGE_RANGES[1].id,
+  );
+  const [theme, setTheme] = useState<string | null>(null);
+  const [tone, setTone] = useState<string | null>("Cozy");
+  const [style, setStyle] = useState<string>(ART_STYLES[0].id);
+  const [directionId, setDirectionId] = useState<string | null>(ART_DIRECTION_BOARDS[0].id);
+  const [voice, setVoice] = useState<string>(VOICES[0].id);
+  const [voiceProfileId, setVoiceProfileId] = useState<string | null>(null);
+  const [pages, setPages] = useState(8);
+  const [cast, setCast] = useState<string[]>([]);
+  const [busy, setBusy] = useState(false);
+  const [safety, setSafety] = useState<"idle" | "checking" | "passed" | "blocked" | "error">(
+    "idle",
+  );
+  const [draft, setDraft] = useState<{
+    title: string;
+    coverPrompt: string;
+    pages: { text: string; imagePrompt: string }[];
+  } | null>(null);
+  const { data: chars = [] } = useQuery({
+    queryKey: ["characters"],
+    queryFn: async () =>
+      (await supabase.from("characters").select("*").order("created_at")).data ?? [],
+  });
+  const { data: customVoices = [] } = useQuery({
+    queryKey: ["voice-profiles"],
+    queryFn: async () =>
+      (await supabase.from("voice_profiles").select("id,name").order("created_at")).data ?? [],
+  });
+
+  async function create() {
+    if (idea.trim().length < 3) {
+      toast.error("Tell us a little about your story idea.");
+      return;
+    }
+    if (!user) return;
+    setBusy(true);
+    try {
+      if (safety !== "passed") {
+        setSafety("checking");
+        const safetyResult = await checkSafety({ data: { content: idea, ageRange: age } });
+        if (safetyResult.status === "blocked") {
+          setSafety("blocked");
+          toast.error("This idea cannot be generated for a children's story. Please revise it.");
+          return;
+        }
+        setSafety("passed");
+      }
+      const picked = chars.filter((c) => cast.includes(c.id));
+      const ageInfo = AGE_RANGES.find((a) => a.id === age);
+      if (!ageInfo) throw new Error("Choose a reader age.");
+      if (!draft) {
+        const out = await gen({
+          data: {
+            idea,
+            ageRange: age,
+            ageGuide: ageInfo.words,
+            theme,
+            tone,
+            artStyle: directionId
+              ? `${ART_DIRECTION_BOARDS.find((board) => board.id === directionId)?.name}: ${ART_DIRECTION_BOARDS.find((board) => board.id === directionId)?.prompt}`
+              : style,
+            pages,
+            characters: picked.map((c) => ({
+              name: c.name,
+              description: [
+                c.kind,
+                c.age,
+                c.appearance,
+                c.outfit,
+                c.palette && `Fixed colors: ${c.palette}`,
+                c.personality,
+                "Keep these exact visual traits in every page illustration prompt; never change clothing, colors, age or anatomy",
+              ]
+                .filter(Boolean)
+                .join(", "),
+            })),
+          },
+        });
+        setDraft(out);
+        toast.success("Story plan ready for your review");
+        return;
+      }
+      const { data: story, error } = await supabase
+        .from("stories")
+        .insert({
+          user_id: user.id,
+          title: draft.title,
+          idea,
+          age_range: age,
+          theme,
+          tone,
+          art_style: style,
+          art_direction_id: directionId,
+          art_direction_prompt: directionId
+            ? (ART_DIRECTION_BOARDS.find((board) => board.id === directionId)?.prompt ?? null)
+            : null,
+          voice,
+          voice_profile_id: voiceProfileId,
+          character_ids: cast,
+          status: "draft",
+        })
+        .select()
+        .single();
+      if (error) throw error;
+      const { error: pe } = await supabase.from("story_pages").insert(
+        draft.pages.map((p, i) => ({
+          story_id: story.id,
+          user_id: user.id,
+          page_number: i + 1,
+          text: p.text,
+          image_prompt: p.imagePrompt,
+        })),
+      );
+      if (pe) throw pe;
+      toast.success("Your story is ready!");
+      nav({ to: "/stories/$id", params: { id: story.id } });
+    } catch (e) {
+      toast.error((e as Error).message);
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  const Section = ({ title, children }: { title: string; children: React.ReactNode }) => (
+    <section className="story-form-section">
+      <h2 className="mb-4 text-lg font-semibold">{title}</h2>
+      {children}
+    </section>
+  );
+
+  return (
+    <div className="max-w-6xl">
+      <PageHeader
+        eyebrow="Create"
+        title="New story"
+        subtitle="An original book, shaped around your reader."
+      />
+      <div className="mb-8 grid gap-3 border-y py-4 sm:grid-cols-4">
+        {[
+          ["01", "Brief", idea.trim().length >= 3],
+          ["02", "Shape", Boolean(theme || tone)],
+          ["03", "Direct", Boolean(directionId || style)],
+          ["04", "Approve", Boolean(draft)],
+        ].map(([number, label, done]) => (
+          <div key={label as string} className="flex items-center gap-3">
+            <span
+              className={cn(
+                "grid h-8 w-8 place-items-center rounded-full text-xs font-bold",
+                done ? "bg-primary text-primary-foreground" : "bg-secondary text-muted-foreground",
+              )}
+            >
+              {done ? <Check className="h-4 w-4" /> : number}
+            </span>
+            <span className="text-sm font-semibold">{label}</span>
+          </div>
+        ))}
+      </div>
+      <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_280px]">
+        <div className="space-y-5">
+          <section className="story-form-section">
+            <h2 className="mb-4 text-lg font-semibold">1. Your idea</h2>
+            <Textarea
+              rows={4}
+              value={idea}
+              onChange={(e) => {
+                setIdea(e.target.value);
+                setSafety("idle");
+              }}
+              placeholder="A shy hedgehog who's afraid of the dark finds a firefly friend…"
+            />
+            <div
+              className={cn(
+                "mt-4 flex items-start gap-3 rounded-xl border p-4 text-sm",
+                safety === "passed" && "border-accent/40 bg-accent/10",
+                safety === "blocked" && "border-destructive/40 bg-destructive/10",
+                safety !== "passed" && safety !== "blocked" && "bg-secondary/45",
+              )}
+            >
+              {safety === "blocked" ? (
+                <ShieldAlert className="mt-0.5 h-4 w-4 shrink-0 text-destructive" />
+              ) : safety === "passed" ? (
+                <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+              ) : (
+                <LockKeyhole className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+              )}
+              <div>
+                <p className="font-semibold">
+                  {safety === "checking"
+                    ? "Checking this idea…"
+                    : safety === "passed"
+                      ? "Safety review passed"
+                      : safety === "blocked"
+                        ? "Please revise this idea"
+                        : "Safety review before generation"}
+                </p>
+                <p className="mt-1 text-xs leading-5 text-muted-foreground">
+                  {safety === "passed"
+                    ? "The idea is cleared for the selected age band. You can continue to story planning."
+                    : "Every story idea is checked before writing or illustration begins."}
+                </p>
+              </div>
+            </div>
+            <div className="mt-4 flex flex-wrap items-center gap-2">
+              <span className="mr-1 text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+                Start from
+              </span>
+              {[
+                "A bedtime ritual becomes an adventure",
+                "A child finds a place to belong",
+                "A tiny creature solves a big problem",
+              ].map((starter) => (
+                <button
+                  key={starter}
+                  type="button"
+                  onClick={() => setIdea(starter)}
+                  className="rounded-full border bg-card px-3 py-1.5 text-xs font-medium text-muted-foreground transition hover:border-primary/40 hover:text-foreground"
+                >
+                  {starter}
+                </button>
+              ))}
+            </div>
+          </section>
+          <Section title="2. Reader age">
+            <div className="grid gap-2 sm:grid-cols-4">
+              {AGE_RANGES.map((a) => (
+                <Button
+                  variant="outline"
+                  key={a.id}
+                  onClick={() => setAge(a.id)}
+                  className={cn(
+                    "h-auto whitespace-normal rounded-lg border p-4 text-left flex-col items-start",
+                    age === a.id ? "border-primary bg-primary/10" : "hover:bg-secondary",
+                  )}
+                >
+                  <p className="font-semibold">{a.id}</p>
+                  <p className="text-xs text-muted-foreground">{a.label}</p>
+                </Button>
+              ))}
+            </div>
+          </Section>
+          <Section title="3. Theme & tone">
+            <div className="space-y-3">
+              {THEMES.map((g) => (
+                <div key={g.group}>
+                  <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                    {g.group}
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {g.items.map((t) => (
+                      <Chip
+                        key={t}
+                        on={theme === t}
+                        onClick={() => setTheme(theme === t ? null : t)}
+                      >
+                        {t}
+                      </Chip>
+                    ))}
+                  </div>
+                </div>
+              ))}
+              <p className="pt-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                Tone
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {TONES.map((t) => (
+                  <Chip key={t} on={tone === t} onClick={() => setTone(t)}>
+                    {t}
+                  </Chip>
+                ))}
+              </div>
+            </div>
+          </Section>
+          <Section title="4. CyliaTales art direction">
+            <p className="mb-4 max-w-2xl text-sm leading-6 text-muted-foreground">
+              Choose a visual world with a real production board. This direction is carried into
+              every illustration prompt and stays attached to the story.
+            </p>
+            <ArtDirectionPicker
+              selected={directionId}
+              onSelect={(id) => {
+                setDirectionId(id);
+                const board = ART_DIRECTION_BOARDS.find((item) => item.id === id);
+                if (board) setStyle(board.name);
+              }}
+            />
+            <div className="mt-6 border-t pt-6">
+              <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                Or use a foundational medium
+              </p>
+              <div className="grid gap-2 sm:grid-cols-3">
+                {ART_STYLES.map((s) => (
+                  <Button
+                    variant="outline"
+                    key={s.id}
+                    aria-pressed={style === s.id}
+                    onClick={() => {
+                      setDirectionId(null);
+                      setStyle(s.id);
+                    }}
+                    className={cn(
+                      "h-auto overflow-hidden whitespace-normal rounded-lg border p-0 text-left flex-col items-stretch gap-0",
+                      style === s.id
+                        ? "border-primary ring-2 ring-primary/20 bg-primary/10"
+                        : "hover:bg-secondary",
+                    )}
+                  >
+                    <span className="flex flex-col gap-1 p-4">
+                      <span className="font-semibold">{s.id}</span>
+                      <span className="text-xs text-muted-foreground">{s.hint}</span>
+                    </span>
+                  </Button>
+                ))}
+              </div>
+            </div>
+          </Section>
+          <Section title="5. Cast, narrator & length">
+            <div className="flex flex-wrap gap-2">
+              {chars.map((c) => (
+                <Chip
+                  key={c.id}
+                  on={cast.includes(c.id)}
+                  onClick={() =>
+                    setCast(cast.includes(c.id) ? cast.filter((x) => x !== c.id) : [...cast, c.id])
+                  }
+                >
+                  {c.name}
+                </Chip>
+              ))}
+              {!chars.length && (
+                <p className="text-sm text-muted-foreground">
+                  No characters yet — we'll invent some.
+                </p>
+              )}
+            </div>
+            <div className="mt-4 flex flex-wrap gap-2">
+              {VOICES.map((v) => (
+                <Chip
+                  key={v.id}
+                  on={!voiceProfileId && voice === v.id}
+                  onClick={() => {
+                    setVoice(v.id);
+                    setVoiceProfileId(null);
+                  }}
+                >
+                  {v.id} · {v.mood}
+                </Chip>
+              ))}
+              {customVoices.map((v) => (
+                <Chip
+                  key={v.id}
+                  on={voiceProfileId === v.id}
+                  onClick={() => {
+                    setVoice(v.name);
+                    setVoiceProfileId(v.id);
+                  }}
+                >
+                  {v.name} · Private
+                </Chip>
+              ))}
+            </div>
+            <div className="mt-4 flex items-center gap-3 text-sm">
+              Pages{" "}
+              <input
+                type="range"
+                min={4}
+                max={16}
+                value={pages}
+                onChange={(e) => setPages(+e.target.value)}
+                className="accent-primary"
+              />{" "}
+              <b>{pages}</b>
+            </div>
+          </Section>
+          {draft && (
+            <section className="overflow-hidden rounded-2xl border bg-card shadow-soft">
+              <div className="flex flex-wrap items-center justify-between gap-3 border-b bg-secondary/40 p-5">
+                <div>
+                  <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-primary">
+                    <FileText className="h-4 w-4" /> Review before production
+                  </p>
+                  <h2 className="mt-2 font-display text-2xl">{draft.title}</h2>
+                  <p className="mt-1 text-sm text-muted-foreground">
+                    {draft.pages.length} pages · {age} · {style}
+                  </p>
+                </div>
+                <Button type="button" variant="outline" onClick={() => setDraft(null)}>
+                  <RefreshCw /> Regenerate plan
+                </Button>
+              </div>
+              <div className="divide-y">
+                {draft.pages.map((page, i) => (
+                  <div key={i} className="grid gap-3 p-5 md:grid-cols-[72px_1fr]">
+                    <div className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+                      Page {i + 1}
+                    </div>
+                    <div>
+                      <p className="font-display text-lg leading-relaxed">{page.text}</p>
+                      <p className="mt-2 text-xs text-muted-foreground">
+                        <span className="font-semibold text-foreground">Visual direction:</span>{" "}
+                        {page.imagePrompt}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div className="flex items-center gap-2 border-t p-5 text-sm text-muted-foreground">
+                <Check className="h-4 w-4 text-accent" /> Nothing is illustrated until you approve
+                this plan.
+              </div>
+            </section>
+          )}
+          <Button size="lg" className="w-full" disabled={busy} onClick={create}>
+            {busy
+              ? draft
+                ? "Building your book…"
+                : "Writing your plan…"
+              : draft
+                ? "Approve plan & build book"
+                : "Preview my story plan"}
+          </Button>
+        </div>
+        <aside className="self-start lg:sticky lg:top-24">
+          <div className="overflow-hidden rounded-2xl border bg-card shadow-soft">
+            <div className="border-b bg-secondary/40 p-5">
+              <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-primary">
+                <Sparkles className="h-4 w-4" /> Live brief
+              </p>
+              <h2 className="mt-3 font-display text-2xl">
+                {idea.trim() || "Your story begins with a moment"}
+              </h2>
+              <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                The choices here travel with the manuscript, art direction and read-aloud version.
+              </p>
+            </div>
+            <div className="space-y-4 p-5 text-sm">
+              <div className="flex items-start gap-3">
+                <BookOpenText className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                <span>
+                  <strong className="block">Reader</strong>
+                  <span className="text-muted-foreground">
+                    Ages {age} · {pages} pages
+                  </span>
+                </span>
+              </div>
+              <div className="flex items-start gap-3">
+                <Sparkles className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                <span>
+                  <strong className="block">Feeling</strong>
+                  <span className="text-muted-foreground">
+                    {theme || "Choose a story theme"} · {tone || "Choose a tone"}
+                  </span>
+                </span>
+              </div>
+              <div className="flex items-start gap-3">
+                <Clock3 className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                <span>
+                  <strong className="block">Voice</strong>
+                  <span className="text-muted-foreground">
+                    {voiceProfileId ? "Private voice" : voice}
+                  </span>
+                </span>
+              </div>
+              <div className="flex items-start gap-3">
+                <LockKeyhole className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                <span>
+                  <strong className="block">Review-first</strong>
+                  <span className="text-muted-foreground">
+                    No illustration is produced before approval.
+                  </span>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div className="mt-3 rounded-2xl border border-primary/20 bg-primary/5 p-5 text-sm leading-6">
+            <p className="font-semibold">A considered first draft</p>
+            <p className="mt-1 text-muted-foreground">
+              CyliaTales keeps the story editable until the world, pacing and page plan feel right.
+            </p>
+          </div>
+        </aside>
+      </div>
+    </div>
+  );
+}

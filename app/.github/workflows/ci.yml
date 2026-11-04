@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Typecheck, lint & build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check for unresolved merge conflicts
+        run: |
+          if grep -rlE '^(<<<<<<<|=======$|>>>>>>>)' . \
+              --exclude-dir=node_modules --exclude-dir=.git --exclude-dir=.output; then
+            echo "::error::Unresolved merge-conflict markers found in the files above."
+            exit 1
+          fi
+
+      # Runs typecheck, lint and build in sequence — the same gate used
+      # locally via `npm run validate:production`, so CI and local runs
+      # can never silently drift apart.
+      - name: Typecheck, lint & build
+        run: npm run validate:production

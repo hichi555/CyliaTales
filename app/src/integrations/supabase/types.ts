@@ -1,0 +1,809 @@
+export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[];
+
+export type Database = {
+  // Allows to automatically instantiate createClient with right options
+  // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
+  __InternalSupabase: {
+    PostgrestVersion: "14.18";
+  };
+  public: {
+    Tables: {
+      characters: {
+        Row: {
+          age: string | null;
+          appearance: string | null;
+          art_style: string;
+          body_shape: string | null;
+          created_at: string;
+          expression: string | null;
+          face_shape: string | null;
+          hair_style: string | null;
+          id: string;
+          kind: string;
+          name: string;
+          outfit: string | null;
+          palette: string | null;
+          personality: string | null;
+          portrait_url: string | null;
+          reference_url: string | null;
+          silhouette: string | null;
+          updated_at: string;
+          user_id: string;
+          voice_profile_id: string | null;
+        };
+        Insert: {
+          age?: string | null;
+          appearance?: string | null;
+          art_style?: string;
+          body_shape?: string | null;
+          created_at?: string;
+          expression?: string | null;
+          face_shape?: string | null;
+          hair_style?: string | null;
+          id?: string;
+          kind?: string;
+          name: string;
+          outfit?: string | null;
+          palette?: string | null;
+          personality?: string | null;
+          portrait_url?: string | null;
+          reference_url?: string | null;
+          silhouette?: string | null;
+          updated_at?: string;
+          user_id?: string;
+          voice_profile_id?: string | null;
+        };
+        Update: {
+          age?: string | null;
+          appearance?: string | null;
+          art_style?: string;
+          body_shape?: string | null;
+          created_at?: string;
+          expression?: string | null;
+          face_shape?: string | null;
+          hair_style?: string | null;
+          id?: string;
+          kind?: string;
+          name?: string;
+          outfit?: string | null;
+          palette?: string | null;
+          personality?: string | null;
+          portrait_url?: string | null;
+          reference_url?: string | null;
+          silhouette?: string | null;
+          updated_at?: string;
+          user_id?: string;
+          voice_profile_id?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "characters_voice_profile_id_fkey";
+            columns: ["voice_profile_id"];
+            isOneToOne: false;
+            referencedRelation: "voice_profiles";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      world_items: {
+        Row: {
+          anchor: string;
+          created_at: string;
+          id: string;
+          kind: string;
+          name: string;
+          purpose: string;
+          user_id: string;
+        };
+        Insert: {
+          anchor: string;
+          created_at?: string;
+          id?: string;
+          kind: string;
+          name: string;
+          purpose: string;
+          user_id?: string;
+        };
+        Update: {
+          anchor?: string;
+          created_at?: string;
+          id?: string;
+          kind?: string;
+          name?: string;
+          purpose?: string;
+          user_id?: string;
+        };
+        Relationships: [];
+      };
+      profiles: {
+        Row: {
+          created_at: string;
+          display_name: string | null;
+          id: string;
+          preferences: Json;
+        };
+        Insert: {
+          created_at?: string;
+          display_name?: string | null;
+          id: string;
+          preferences?: Json;
+        };
+        Update: {
+          created_at?: string;
+          display_name?: string | null;
+          id?: string;
+          preferences?: Json;
+        };
+        Relationships: [];
+      };
+      stories: {
+        Row: {
+          age_range: string;
+          art_style: string;
+          art_direction_id: string | null;
+          art_direction_prompt: string | null;
+          character_ids: string[];
+          cover_url: string | null;
+          created_at: string;
+          id: string;
+          idea: string | null;
+          status: string;
+          theme: string | null;
+          title: string;
+          tone: string | null;
+          updated_at: string;
+          user_id: string;
+          voice: string;
+          voice_profile_id: string | null;
+          visibility: string;
+          published_at: string | null;
+          source_story_id: string | null;
+          branch_type: string;
+        };
+        Insert: {
+          age_range?: string;
+          art_style?: string;
+          art_direction_id?: string | null;
+          art_direction_prompt?: string | null;
+          character_ids?: string[];
+          cover_url?: string | null;
+          created_at?: string;
+          id?: string;
+          idea?: string | null;
+          status?: string;
+          theme?: string | null;
+          title?: string;
+          tone?: string | null;
+          updated_at?: string;
+          user_id?: string;
+          voice?: string;
+          voice_profile_id?: string | null;
+          visibility?: string;
+          published_at?: string | null;
+          source_story_id?: string | null;
+          branch_type?: string;
+        };
+        Update: {
+          age_range?: string;
+          art_style?: string;
+          art_direction_id?: string | null;
+          art_direction_prompt?: string | null;
+          character_ids?: string[];
+          cover_url?: string | null;
+          created_at?: string;
+          id?: string;
+          idea?: string | null;
+          status?: string;
+          theme?: string | null;
+          title?: string;
+          tone?: string | null;
+          updated_at?: string;
+          user_id?: string;
+          voice?: string;
+          voice_profile_id?: string | null;
+          visibility?: string;
+          published_at?: string | null;
+          source_story_id?: string | null;
+          branch_type?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "stories_voice_profile_id_fkey";
+            columns: ["voice_profile_id"];
+            isOneToOne: false;
+            referencedRelation: "voice_profiles";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      story_panels: {
+        Row: {
+          id: string;
+          story_id: string;
+          page_id: string;
+          user_id: string;
+          panel_number: number;
+          layout: string;
+          text: string;
+          image_prompt: string;
+          image_url: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          story_id: string;
+          page_id: string;
+          user_id?: string;
+          panel_number: number;
+          layout?: string;
+          text?: string;
+          image_prompt: string;
+          image_url?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          story_id?: string;
+          page_id?: string;
+          user_id?: string;
+          panel_number?: number;
+          layout?: string;
+          text?: string;
+          image_prompt?: string;
+          image_url?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      story_pages: {
+        Row: {
+          audio_url: string | null;
+          camera_motion: string;
+          captions_enabled: boolean;
+          created_at: string;
+          duration_seconds: number;
+          audio_duck_db: number;
+          beat_markers: Json;
+          id: string;
+          image_prompt: string | null;
+          image_url: string | null;
+          motion_error: string | null;
+          motion_job_id: string | null;
+          motion_prompt: string | null;
+          motion_status: string;
+          motion_url: string | null;
+          page_number: number;
+          pacing: string;
+          shot_type: string;
+          story_id: string;
+          text: string;
+          translation_text: string | null;
+          translation_language: string | null;
+          transition_duration_ms: number;
+          transition_easing: string;
+          transition_type: string;
+          updated_at: string;
+          user_id: string;
+        };
+        Insert: {
+          audio_url?: string | null;
+          camera_motion?: string;
+          captions_enabled?: boolean;
+          created_at?: string;
+          duration_seconds?: number;
+          audio_duck_db?: number;
+          beat_markers?: Json;
+          id?: string;
+          image_prompt?: string | null;
+          image_url?: string | null;
+          motion_error?: string | null;
+          motion_job_id?: string | null;
+          motion_prompt?: string | null;
+          motion_status?: string;
+          motion_url?: string | null;
+          page_number: number;
+          pacing?: string;
+          shot_type?: string;
+          story_id: string;
+          text?: string;
+          translation_text?: string | null;
+          translation_language?: string | null;
+          transition_duration_ms?: number;
+          transition_easing?: string;
+          transition_type?: string;
+          updated_at?: string;
+          user_id?: string;
+        };
+        Update: {
+          audio_url?: string | null;
+          camera_motion?: string;
+          captions_enabled?: boolean;
+          created_at?: string;
+          duration_seconds?: number;
+          audio_duck_db?: number;
+          beat_markers?: Json;
+          id?: string;
+          image_prompt?: string | null;
+          image_url?: string | null;
+          motion_error?: string | null;
+          motion_job_id?: string | null;
+          motion_prompt?: string | null;
+          motion_status?: string;
+          motion_url?: string | null;
+          page_number?: number;
+          pacing?: string;
+          shot_type?: string;
+          story_id?: string;
+          text?: string;
+          translation_text?: string | null;
+          translation_language?: string | null;
+          transition_duration_ms?: number;
+          transition_easing?: string;
+          transition_type?: string;
+          updated_at?: string;
+          user_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "story_pages_story_id_fkey";
+            columns: ["story_id"];
+            isOneToOne: false;
+            referencedRelation: "stories";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      story_outputs: {
+        Row: {
+          asset_url: string | null;
+          created_at: string;
+          error: string | null;
+          id: string;
+          kind: string;
+          prompt: string;
+          status: string;
+          story_id: string;
+          title: string;
+          updated_at: string;
+          user_id: string;
+        };
+        Insert: {
+          asset_url?: string | null;
+          created_at?: string;
+          error?: string | null;
+          id?: string;
+          kind: string;
+          prompt: string;
+          status?: string;
+          story_id: string;
+          title: string;
+          updated_at?: string;
+          user_id?: string;
+        };
+        Update: {
+          asset_url?: string | null;
+          created_at?: string;
+          error?: string | null;
+          id?: string;
+          kind?: string;
+          prompt?: string;
+          status?: string;
+          story_id?: string;
+          title?: string;
+          updated_at?: string;
+          user_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "story_outputs_story_id_fkey";
+            columns: ["story_id"];
+            isOneToOne: false;
+            referencedRelation: "stories";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      story_generation_jobs: {
+        Row: {
+          attempts: number;
+          completed_at: string | null;
+          created_at: string;
+          error: string | null;
+          id: string;
+          job_type: string;
+          provider: string;
+          request_payload: Json;
+          result_summary: Json | null;
+          started_at: string | null;
+          status: string;
+          story_id: string | null;
+          updated_at: string;
+          user_id: string;
+        };
+        Insert: {
+          attempts?: number;
+          completed_at?: string | null;
+          created_at?: string;
+          error?: string | null;
+          id?: string;
+          job_type: string;
+          provider?: string;
+          request_payload?: Json;
+          result_summary?: Json | null;
+          started_at?: string | null;
+          status?: string;
+          story_id?: string | null;
+          updated_at?: string;
+          user_id: string;
+        };
+        Update: {
+          attempts?: number;
+          completed_at?: string | null;
+          created_at?: string;
+          error?: string | null;
+          id?: string;
+          job_type?: string;
+          provider?: string;
+          request_payload?: Json;
+          result_summary?: Json | null;
+          started_at?: string | null;
+          status?: string;
+          story_id?: string | null;
+          updated_at?: string;
+          user_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "story_generation_jobs_story_id_fkey";
+            columns: ["story_id"];
+            isOneToOne: false;
+            referencedRelation: "stories";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      creation_projects: {
+        Row: {
+          age_range: string | null;
+          brief: string;
+          created_at: string;
+          creation_mode: string;
+          id: string;
+          language: string;
+          safety_metadata: Json;
+          safety_status: string;
+          selected_models: Json;
+          status: string;
+          story_id: string | null;
+          style_id: string | null;
+          title: string;
+          updated_at: string;
+          user_id: string;
+          voice_profile_id: string | null;
+        };
+        Insert: {
+          age_range?: string | null;
+          brief: string;
+          created_at?: string;
+          creation_mode: string;
+          id?: string;
+          language?: string;
+          safety_metadata?: Json;
+          safety_status?: string;
+          selected_models?: Json;
+          status?: string;
+          story_id?: string | null;
+          style_id?: string | null;
+          title: string;
+          updated_at?: string;
+          user_id?: string;
+          voice_profile_id?: string | null;
+        };
+        Update: {
+          age_range?: string | null;
+          brief?: string;
+          created_at?: string;
+          creation_mode?: string;
+          id?: string;
+          language?: string;
+          safety_metadata?: Json;
+          safety_status?: string;
+          selected_models?: Json;
+          status?: string;
+          story_id?: string | null;
+          style_id?: string | null;
+          title?: string;
+          updated_at?: string;
+          user_id?: string;
+          voice_profile_id?: string | null;
+        };
+        Relationships: [];
+      };
+      character_locks: {
+        Row: {
+          character_id: string | null;
+          created_at: string;
+          id: string;
+          identity_prompt: string;
+          metadata: Json;
+          name: string;
+          negative_prompt: string | null;
+          reference_paths: string[];
+          status: string;
+          style_id: string | null;
+          updated_at: string;
+          user_id: string;
+          version: number;
+        };
+        Insert: {
+          character_id?: string | null;
+          created_at?: string;
+          id?: string;
+          identity_prompt: string;
+          metadata?: Json;
+          name: string;
+          negative_prompt?: string | null;
+          reference_paths?: string[];
+          status?: string;
+          style_id?: string | null;
+          updated_at?: string;
+          user_id?: string;
+          version?: number;
+        };
+        Update: {
+          character_id?: string | null;
+          created_at?: string;
+          id?: string;
+          identity_prompt?: string;
+          metadata?: Json;
+          name?: string;
+          negative_prompt?: string | null;
+          reference_paths?: string[];
+          status?: string;
+          style_id?: string | null;
+          updated_at?: string;
+          user_id?: string;
+          version?: number;
+        };
+        Relationships: [];
+      };
+      creation_project_characters: {
+        Row: {
+          character_lock_id: string;
+          created_at: string;
+          project_id: string;
+          role: string;
+        };
+        Insert: {
+          character_lock_id: string;
+          created_at?: string;
+          project_id: string;
+          role?: string;
+        };
+        Update: {
+          character_lock_id?: string;
+          created_at?: string;
+          project_id?: string;
+          role?: string;
+        };
+        Relationships: [];
+      };
+      creation_artifacts: {
+        Row: {
+          artifact_type: string;
+          created_at: string;
+          duration_seconds: number | null;
+          id: string;
+          metadata: Json;
+          parent_artifact_id: string | null;
+          project_id: string;
+          provider: string | null;
+          status: string;
+          storage_path: string | null;
+          updated_at: string;
+          user_id: string;
+        };
+        Insert: {
+          artifact_type: string;
+          created_at?: string;
+          duration_seconds?: number | null;
+          id?: string;
+          metadata?: Json;
+          parent_artifact_id?: string | null;
+          project_id: string;
+          provider?: string | null;
+          status?: string;
+          storage_path?: string | null;
+          updated_at?: string;
+          user_id: string;
+        };
+        Update: {
+          artifact_type?: string;
+          created_at?: string;
+          duration_seconds?: number | null;
+          id?: string;
+          metadata?: Json;
+          parent_artifact_id?: string | null;
+          project_id?: string;
+          provider?: string | null;
+          status?: string;
+          storage_path?: string | null;
+          updated_at?: string;
+          user_id?: string;
+        };
+        Relationships: [];
+      };
+      voice_profiles: {
+        Row: {
+          consent_confirmed: boolean;
+          consent_text: string | null;
+          created_at: string;
+          id: string;
+          name: string;
+          provider: string;
+          provider_voice_id: string;
+          sample_url: string | null;
+          updated_at: string;
+          user_id: string;
+        };
+        Insert: {
+          consent_confirmed?: boolean;
+          consent_text?: string | null;
+          created_at?: string;
+          id?: string;
+          name: string;
+          provider?: string;
+          provider_voice_id: string;
+          sample_url?: string | null;
+          updated_at?: string;
+          user_id?: string;
+        };
+        Update: {
+          consent_confirmed?: boolean;
+          consent_text?: string | null;
+          created_at?: string;
+          id?: string;
+          name?: string;
+          provider?: string;
+          provider_voice_id?: string;
+          sample_url?: string | null;
+          updated_at?: string;
+          user_id?: string;
+        };
+        Relationships: [];
+      };
+    };
+    Views: {
+      [_ in never]: never;
+    };
+    Functions: {
+      [_ in never]: never;
+    };
+    Enums: {
+      [_ in never]: never;
+    };
+    CompositeTypes: {
+      [_ in never]: never;
+    };
+  };
+};
+
+type DatabaseWithoutInternals = Omit<Database, "__InternalSupabase">;
+
+type DefaultSchema = DatabaseWithoutInternals[Extract<keyof Database, "public">];
+
+export type Tables<
+  DefaultSchemaTableNameOrOptions extends
+    | keyof (DefaultSchema["Tables"] & DefaultSchema["Views"])
+    | { schema: keyof DatabaseWithoutInternals },
+  TableName extends (DefaultSchemaTableNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals;
+  }
+    ? keyof (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
+        DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])
+    : never) = never,
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals;
+}
+  ? (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
+      DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])[TableName] extends {
+      Row: infer R;
+    }
+    ? R
+    : never
+  : DefaultSchemaTableNameOrOptions extends keyof (DefaultSchema["Tables"] & DefaultSchema["Views"])
+    ? (DefaultSchema["Tables"] & DefaultSchema["Views"])[DefaultSchemaTableNameOrOptions] extends {
+        Row: infer R;
+      }
+      ? R
+      : never
+    : never;
+
+export type TablesInsert<
+  DefaultSchemaTableNameOrOptions extends
+    keyof DefaultSchema["Tables"] | { schema: keyof DatabaseWithoutInternals },
+  TableName extends (DefaultSchemaTableNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals;
+  }
+    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
+    : never) = never,
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals;
+}
+  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+      Insert: infer I;
+    }
+    ? I
+    : never
+  : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"]
+    ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends {
+        Insert: infer I;
+      }
+      ? I
+      : never
+    : never;
+
+export type TablesUpdate<
+  DefaultSchemaTableNameOrOptions extends
+    keyof DefaultSchema["Tables"] | { schema: keyof DatabaseWithoutInternals },
+  TableName extends (DefaultSchemaTableNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals;
+  }
+    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
+    : never) = never,
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals;
+}
+  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+      Update: infer U;
+    }
+    ? U
+    : never
+  : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"]
+    ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends {
+        Update: infer U;
+      }
+      ? U
+      : never
+    : never;
+
+export type Enums<
+  DefaultSchemaEnumNameOrOptions extends
+    keyof DefaultSchema["Enums"] | { schema: keyof DatabaseWithoutInternals },
+  EnumName extends (DefaultSchemaEnumNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals;
+  }
+    ? keyof DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"]
+    : never) = never,
+> = DefaultSchemaEnumNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals;
+}
+  ? DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"][EnumName]
+  : DefaultSchemaEnumNameOrOptions extends keyof DefaultSchema["Enums"]
+    ? DefaultSchema["Enums"][DefaultSchemaEnumNameOrOptions]
+    : never;
+
+export type CompositeTypes<
+  PublicCompositeTypeNameOrOptions extends
+    keyof DefaultSchema["CompositeTypes"] | { schema: keyof DatabaseWithoutInternals },
+  CompositeTypeName extends (PublicCompositeTypeNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals;
+  }
+    ? keyof DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
+    : never) = never,
+> = PublicCompositeTypeNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals;
+}
+  ? DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"][CompositeTypeName]
+  : PublicCompositeTypeNameOrOptions extends keyof DefaultSchema["CompositeTypes"]
+    ? DefaultSchema["CompositeTypes"][PublicCompositeTypeNameOrOptions]
+    : never;
+
+export const Constants = {
+  public: {
+    Enums: {},
+  },
+} as const;
