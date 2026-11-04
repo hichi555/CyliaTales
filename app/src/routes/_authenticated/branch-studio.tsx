@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import {
   ArrowRight,
@@ -9,15 +9,19 @@ import {
   GitBranch,
   Lightbulb,
   LockKeyhole,
+  ImagePlus,
   RefreshCw,
   Sparkles,
+  Users,
   WandSparkles,
 } from "lucide-react";
 import { PageHeader } from "@/components/PageHeader";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
-import { generateStoryBranches } from "@/lib/studio.functions";
+import { generateImage, generateStoryBranches } from "@/lib/studio.functions";
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/hooks/use-auth";
 
 export const Route = createFileRoute("/_authenticated/branch-studio")({
   head: () => ({
@@ -79,7 +83,9 @@ const STARTER: BranchDraft = {
 };
 
 function BranchStudio() {
+  const { user } = useAuth();
   const generate = useServerFn(generateStoryBranches);
+  const generatePreview = useServerFn(generateImage);
   const [premise, setPremise] = useState(
     "A cautious child and their lantern fox reach a tideglass marsh. Three signals call from the mist, but only one path will keep their promise to bring a lost moth home.",
   );
@@ -88,6 +94,25 @@ function BranchStudio() {
   const [draft, setDraft] = useState<BranchDraft>(STARTER);
   const [selected, setSelected] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  const [previewBusy, setPreviewBusy] = useState(false);
+  const [preview, setPreview] = useState<string | null>(null);
+  const [collaborators, setCollaborators] = useState(1);
+
+  useEffect(() => {
+    const channel = supabase.channel("cylia-branch-studio", {
+      config: { presence: { key: user?.id ?? "branch-guest" } },
+    });
+    channel
+      .on("presence", { event: "sync" }, () => {
+        setCollaborators(Object.keys(channel.presenceState()).length || 1);
+      })
+      .subscribe(async (status) => {
+        if (status === "SUBSCRIBED") await channel.track({ surface: "branch-studio", at: Date.now() });
+      });
+    return () => {
+      void supabase.removeChannel(channel);
+    };
+  }, [user?.id]);
 
   async function directBranches() {
     if (premise.trim().length < 3) {
@@ -108,6 +133,25 @@ function BranchStudio() {
   }
 
   const chosen = draft.branches.find((branch) => branch.id === selected);
+
+  async function generateScenePreview() {
+    if (!chosen) return;
+    setPreviewBusy(true);
+    try {
+      const result = await generatePreview({
+        data: {
+          prompt: `${chosen.illustrationPrompt}. Preserve the established story-world identity and avoid visual clichés; make the moment specific to the described consequence.`,
+          style: "premium editorial gouache and colored pencil children's book illustration",
+        },
+      });
+      setPreview(`data:image/png;base64,${result.b64}`);
+      toast.success("Scene preview rendered for review.");
+    } catch (error) {
+      toast.error((error as Error).message);
+    } finally {
+      setPreviewBusy(false);
+    }
+  }
 
   return (
     <div className="max-w-7xl pb-12">
@@ -151,7 +195,7 @@ function BranchStudio() {
           <div className="rounded-2xl border border-primary-foreground/15 bg-primary-foreground/10 p-5 backdrop-blur-sm">
             <div className="flex items-center justify-between text-xs uppercase tracking-[0.14em] text-primary-foreground/60">
               <span>Branch map</span>
-              <span>3 directions</span>
+              <span className="inline-flex items-center gap-2"><Users className="h-3.5 w-3.5" /> {collaborators} live</span>
             </div>
             <div className="mt-6 grid grid-cols-[1fr_auto_1fr] items-center gap-3">
               <div className="rounded-xl bg-primary-foreground/10 p-4 text-sm font-semibold">
@@ -260,7 +304,20 @@ function BranchStudio() {
               <Button className="mt-4" variant="outline" onClick={() => toast.success("Direction marked for the next production pass.")}>
                 Carry into production <ArrowRight />
               </Button>
+              <Button className="mt-4 ml-2" onClick={generateScenePreview} disabled={previewBusy}>
+                {previewBusy ? <RefreshCw className="animate-spin" /> : <ImagePlus />}
+                {previewBusy ? "Rendering…" : "Render scene preview"}
+              </Button>
             </div>
+          )}
+          {preview && (
+            <figure className="mt-4 overflow-hidden rounded-2xl border bg-card shadow-soft">
+              <img src={preview} alt={`Generated preview for ${chosen?.label ?? "selected story direction"}`} className="aspect-[3/2] w-full object-cover" />
+              <figcaption className="flex items-center justify-between gap-3 px-4 py-3 text-xs text-muted-foreground">
+                <span>Live image preview · review before canon</span>
+                <Sparkles className="h-4 w-4 text-primary" />
+              </figcaption>
+            </figure>
           )}
         </section>
       </div>
