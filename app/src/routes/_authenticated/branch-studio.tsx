@@ -142,6 +142,7 @@ function BranchStudio() {
         data: {
           prompt: `${chosen.illustrationPrompt}. Preserve the established story-world identity and avoid visual clichés; make the moment specific to the described consequence.`,
           style: "premium editorial gouache and colored pencil children's book illustration",
+          preview: true,
         },
       });
       setPreview(`data:image/png;base64,${result.b64}`);

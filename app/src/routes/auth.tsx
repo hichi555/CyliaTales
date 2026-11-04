@@ -41,10 +41,10 @@ function AuthPage() {
   const browserOrigin =
     typeof window === "undefined" ? (configuredOrigin ?? "") : window.location.origin;
   // Use this same CyliaTales deployment unless its public URL is explicitly configured.
-  const callbackOrigin = (configuredOrigin || browserOrigin).replace(/\/$/, "");
   const localOrigin =
     typeof window !== "undefined" &&
     (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1");
+  const callbackOrigin = ((localOrigin && configuredOrigin) || browserOrigin).replace(/\/$/, "");
   const handoffToPublic =
     localOrigin && Boolean(configuredOrigin) && callbackOrigin !== browserOrigin;
   const callbackUrl = `${callbackOrigin}/auth/callback?returnTo=%2Fstudio`;

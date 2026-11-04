@@ -267,6 +267,7 @@ export const generateImage = createServerFn({ method: "POST" })
         prompt: z.string().min(3).max(4000),
         style: z.string(),
         portrait: z.boolean().optional(),
+        preview: z.boolean().optional(),
         referencePaths: z.array(z.string().min(3).max(300)).max(6).optional(),
       })
       .parse(d),
@@ -326,7 +327,7 @@ export const generateImage = createServerFn({ method: "POST" })
         throw new Error("Cloudflare Workers AI did not return an illustration. Please try again.");
       return { b64 };
     }
-    const size = data.portrait ? "1024x1024" : "1536x1024";
+    const size = data.portrait || data.preview ? "1024x1024" : "1536x1024";
     let res: Response;
     if (refs.length) {
       const form = new FormData();
@@ -336,7 +337,7 @@ export const generateImage = createServerFn({ method: "POST" })
         `Reference images 1-${refs.length} show the established characters. Keep each character's face, hairstyle, body proportions, outfit and color palette exactly consistent with the references, redrawn in the requested art style. Do not copy the references' backgrounds or poses. Scene: ${base}`,
       );
       form.append("size", size);
-      form.append("quality", "high");
+      form.append("quality", data.preview ? "low" : "high");
       for (const [i, path] of refs.entries()) {
         const { data: blob, error } = await context.supabase.storage.from("media").download(path);
         if (error || !blob) throw new Error("A character reference image could not be loaded.");
@@ -362,7 +363,7 @@ export const generateImage = createServerFn({ method: "POST" })
           model,
           prompt: base,
           size,
-          quality: "high",
+          quality: data.preview ? "low" : "high",
         }),
       });
     }
@@ -822,7 +823,7 @@ export const generateStoryBranches = createServerFn({ method: "POST" })
 Premise or current moment:
 ${data.premise}
 
-Return exactly 3 branches. Each branch must change the character's approach, reveal a different kind of consequence, and remain safe, hopeful, and age-appropriate. Preserve continuity: do not introduce a new protagonist, change established relationships, or solve the central problem instantly. Use concrete sensory details and avoid cliché phrases. The scene should be 2-4 short paragraphs. Each branch invitation should sound like a choice a child can understand. The illustration prompt must preserve the same cast, setting, palette and emotional tone, with no text in the image.`;
+Return exactly 3 branches. Each branch must change the character's approach, reveal a different kind of consequence, and remain safe, hopeful, and age-appropriate. Preserve continuity: do not introduce a new protagonist, change established relationships, or solve the central problem instantly. Use concrete sensory details and avoid cliché phrases, stock magical reveals, prophecy language, sudden friendship fixes, lesson-of-the-day endings, and generic bravery beats. Make each consequence grow from a specific object, promise, fear, or relationship. The scene should be 2-4 short paragraphs. Each branch invitation should sound like a choice a child can understand. The illustration prompt must preserve the same cast, setting, palette and emotional tone, with no text in the image.`;
     try {
       let result: z.infer<typeof schema>;
       if (textProviderStatus() === "cloudflare") {
