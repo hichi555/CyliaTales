@@ -13,7 +13,6 @@ import {
   Sparkles,
   UserRound,
 } from "lucide-react";
-import hero from "@/assets/hero.jpg";
 import { Logo } from "@/components/Logo";
 import { Reveal } from "@/components/Reveal";
 import { Button } from "@/components/ui/button";
@@ -202,10 +201,10 @@ function Landing() {
               />
               <figure className="relative overflow-hidden rounded-[1.75rem] border border-white/70 bg-card p-2 shadow-[0_24px_80px_-28px_oklch(0.22_0.03_250/0.45)]">
                 <img
-                  src={hero}
-                  alt="A child and a fox reading a glowing storybook beneath the stars"
-                  width={1536}
-                  height={1024}
+                  src="/assets/cyliatales-hero-showcase.jpg"
+                  alt="A child and a lantern fox discover story worlds beneath a starry sky"
+                  width={2560}
+                  height={1440}
                   className="aspect-[4/3] w-full rounded-[1.25rem] object-cover"
                 />
                 <figcaption className="flex items-center justify-between gap-4 px-4 py-4">
@@ -376,6 +375,38 @@ function Landing() {
                   </article>
                 </Reveal>
               ))}
+            </div>
+            <div className="mt-4 grid gap-4 sm:col-span-2 sm:grid-cols-2">
+              <Reveal delay={180}>
+                <figure className="showcase-tile">
+                  <img
+                    src="/assets/world-layer-showcase.jpg"
+                    alt="A lantern fox and child connected to story-world locations by golden threads"
+                    width={2176}
+                    height={1632}
+                    loading="lazy"
+                  />
+                  <figcaption>
+                    <span className="font-semibold">World continuity</span>
+                    <span>Cast, places and feeling held together.</span>
+                  </figcaption>
+                </figure>
+              </Reveal>
+              <Reveal delay={260}>
+                <figure className="showcase-tile">
+                  <img
+                    src="/assets/motion-desk-showcase.jpg"
+                    alt="A lantern fox crossing a glowing bridge with cinematic storyboard motifs"
+                    width={2176}
+                    height={1632}
+                    loading="lazy"
+                  />
+                  <figcaption>
+                    <span className="font-semibold">Motion direction</span>
+                    <span>Turn an approved page into a scene.</span>
+                  </figcaption>
+                </figure>
+              </Reveal>
             </div>
           </div>
         </section>
