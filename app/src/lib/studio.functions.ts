@@ -790,3 +790,102 @@ ${data.story}
       throw e;
     }
   });
+
+const BranchingStoryInput = z.object({
+  premise: z.string().trim().min(3).max(1600),
+  ageRange: z.string().max(40),
+  atmosphere: z.string().max(80),
+});
+
+export const generateStoryBranches = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((d: unknown) => BranchingStoryInput.parse(d))
+  .handler(async ({ data }) => {
+    const { cloudflareStructuredChat, requireTextKey, textModel, textProviderStatus } =
+      await import("./ai-gateway.server");
+    const { streamText, Output, NoObjectGeneratedError } = await import("ai");
+    const schema = z.object({
+      sceneTitle: z.string().max(80),
+      scene: z.string().max(900),
+      branches: z.array(
+        z.object({
+          id: z.string().max(20),
+          label: z.string().max(80),
+          invitation: z.string().max(180),
+          consequence: z.string().max(240),
+          illustrationPrompt: z.string().max(500),
+        }),
+      ),
+      continuityNote: z.string().max(240),
+    });
+    const prompt = `You are CyliaTales' senior interactive story director. Create a small, emotionally meaningful branching moment for a children's story, not a generic choose-your-own-adventure. Target age: ${data.ageRange}. Atmosphere: ${data.atmosphere}.
+Premise or current moment:
+${data.premise}
+
+Return exactly 3 branches. Each branch must change the character's approach, reveal a different kind of consequence, and remain safe, hopeful, and age-appropriate. Preserve continuity: do not introduce a new protagonist, change established relationships, or solve the central problem instantly. Use concrete sensory details and avoid cliché phrases. The scene should be 2-4 short paragraphs. Each branch invitation should sound like a choice a child can understand. The illustration prompt must preserve the same cast, setting, palette and emotional tone, with no text in the image.`;
+    try {
+      let result: z.infer<typeof schema>;
+      if (textProviderStatus() === "cloudflare") {
+        result = schema.parse(
+          await cloudflareStructuredChat({
+            prompt,
+            schemaName: "cylia_interactive_branches",
+            maxTokens: 2600,
+            responseSchema: {
+              type: "object",
+              properties: {
+                sceneTitle: { type: "string" },
+                scene: { type: "string" },
+                branches: {
+                  type: "array",
+                  minItems: 3,
+                  maxItems: 3,
+                  items: {
+                    type: "object",
+                    properties: {
+                      id: { type: "string" },
+                      label: { type: "string" },
+                      invitation: { type: "string" },
+                      consequence: { type: "string" },
+                      illustrationPrompt: { type: "string" },
+                    },
+                    required: ["id", "label", "invitation", "consequence", "illustrationPrompt"],
+                    additionalProperties: false,
+                  },
+                },
+                continuityNote: { type: "string" },
+              },
+              required: ["sceneTitle", "scene", "branches", "continuityNote"],
+              additionalProperties: false,
+            },
+          }),
+        );
+      } else {
+        const generated = streamText({
+          model: textModel(requireTextKey()),
+          output: Output.object({ schema }),
+          prompt,
+          ...(textProviderStatus() === "openai"
+            ? {
+                providerOptions: {
+                  openai: {
+                    forceReasoning: true,
+                    reasoningEffort: "low",
+                    reasoningSummary: "auto",
+                    store: false,
+                  },
+                },
+              }
+            : {}),
+        });
+        result = await generated.output;
+      }
+      if (result.branches.length !== 3)
+        throw new Error("The story director returned an incomplete choice set. Please try again.");
+      return result;
+    } catch (e) {
+      if (NoObjectGeneratedError.isInstance(e))
+        throw new Error("The story director could not finish the scene. Please try again.");
+      throw e;
+    }
+  });

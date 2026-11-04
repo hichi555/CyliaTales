@@ -10,6 +10,7 @@ import {
   Clapperboard,
   FileImage,
   Film,
+  GitBranch,
   GraduationCap,
   Globe2,
   Layers3,
@@ -232,6 +233,19 @@ function Studio() {
             </p>
             <span className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-primary">
               Open atlas <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
+            </span>
+          </Link>
+          <Link
+            to="/branch-studio"
+            className="group rounded-2xl border p-5 transition hover:-translate-y-0.5 hover:border-primary/40"
+          >
+            <GitBranch className="h-5 w-5 text-primary" />
+            <h3 className="mt-4 font-semibold">Branch Studio</h3>
+            <p className="mt-1 text-sm leading-6 text-muted-foreground">
+              Direct a meaningful next beat and keep the consequence that belongs in your world.
+            </p>
+            <span className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-primary">
+              Open story director <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
             </span>
           </Link>
           <Link

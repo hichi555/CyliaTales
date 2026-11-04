@@ -17,6 +17,7 @@ import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as AuthenticatedActivitiesRouteImport } from './routes/_authenticated/activities'
+import { Route as AuthenticatedBranchStudioRouteImport } from './routes/_authenticated/branch-studio'
 import { Route as AuthenticatedCharactersRouteImport } from './routes/_authenticated/characters'
 import { Route as AuthenticatedCreateRouteImport } from './routes/_authenticated/create'
 import { Route as AuthenticatedLabsRouteImport } from './routes/_authenticated/labs'
@@ -70,6 +71,12 @@ const AuthenticatedActivitiesRoute = AuthenticatedActivitiesRouteImport.update({
   path: '/activities',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedBranchStudioRoute =
+  AuthenticatedBranchStudioRouteImport.update({
+    id: '/branch-studio',
+    path: '/branch-studio',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedCharactersRoute = AuthenticatedCharactersRouteImport.update({
   id: '/characters',
   path: '/characters',
@@ -145,6 +152,7 @@ export interface FileRoutesByFullPath {
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
   '/activities': typeof AuthenticatedActivitiesRoute
+  '/branch-studio': typeof AuthenticatedBranchStudioRoute
   '/characters': typeof AuthenticatedCharactersRoute
   '/create': typeof AuthenticatedCreateRoute
   '/labs': typeof AuthenticatedLabsRoute
@@ -167,6 +175,7 @@ export interface FileRoutesByTo {
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
   '/activities': typeof AuthenticatedActivitiesRoute
+  '/branch-studio': typeof AuthenticatedBranchStudioRoute
   '/characters': typeof AuthenticatedCharactersRoute
   '/create': typeof AuthenticatedCreateRoute
   '/labs': typeof AuthenticatedLabsRoute
@@ -191,6 +200,7 @@ export interface FileRoutesById {
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
   '/_authenticated/activities': typeof AuthenticatedActivitiesRoute
+  '/_authenticated/branch-studio': typeof AuthenticatedBranchStudioRoute
   '/_authenticated/characters': typeof AuthenticatedCharactersRoute
   '/_authenticated/create': typeof AuthenticatedCreateRoute
   '/_authenticated/labs': typeof AuthenticatedLabsRoute
@@ -215,6 +225,7 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/terms'
     | '/activities'
+    | '/branch-studio'
     | '/characters'
     | '/create'
     | '/labs'
@@ -237,6 +248,7 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/terms'
     | '/activities'
+    | '/branch-studio'
     | '/characters'
     | '/create'
     | '/labs'
@@ -260,6 +272,7 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/terms'
     | '/_authenticated/activities'
+    | '/_authenticated/branch-studio'
     | '/_authenticated/characters'
     | '/_authenticated/create'
     | '/_authenticated/labs'
@@ -341,6 +354,13 @@ declare module '@tanstack/react-router' {
       path: '/activities'
       fullPath: '/activities'
       preLoaderRoute: typeof AuthenticatedActivitiesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/branch-studio': {
+      id: '/_authenticated/branch-studio'
+      path: '/branch-studio'
+      fullPath: '/branch-studio'
+      preLoaderRoute: typeof AuthenticatedBranchStudioRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/characters': {
@@ -439,6 +459,7 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedActivitiesRoute: typeof AuthenticatedActivitiesRoute
+  AuthenticatedBranchStudioRoute: typeof AuthenticatedBranchStudioRoute
   AuthenticatedCharactersRoute: typeof AuthenticatedCharactersRoute
   AuthenticatedCreateRoute: typeof AuthenticatedCreateRoute
   AuthenticatedLabsRoute: typeof AuthenticatedLabsRoute
@@ -454,6 +475,7 @@ interface AuthenticatedRouteRouteChildren {
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedActivitiesRoute: AuthenticatedActivitiesRoute,
+  AuthenticatedBranchStudioRoute: AuthenticatedBranchStudioRoute,
   AuthenticatedCharactersRoute: AuthenticatedCharactersRoute,
   AuthenticatedCreateRoute: AuthenticatedCreateRoute,
   AuthenticatedLabsRoute: AuthenticatedLabsRoute,

@@ -11,6 +11,7 @@ import {
   Settings2,
   Globe2,
   Compass,
+  GitBranch,
   Sparkles,
 } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
@@ -29,6 +30,7 @@ const NAV = [
     items: [
       { to: "/studio", label: "Overview", icon: LayoutGrid },
       { to: "/stories/new", label: "New story", icon: PenTool },
+      { to: "/branch-studio", label: "Branch Studio", icon: GitBranch },
       { to: "/world", label: "Story World", icon: Globe2 },
       { to: "/create", label: "Story formats", icon: Sparkles },
     ],
@@ -57,7 +59,7 @@ const NAV = [
 
 const MOBILE_NAV = [
   { to: "/studio", label: "Overview", icon: LayoutGrid },
-  { to: "/stories", label: "My books", icon: BookOpen },
+  { to: "/branch-studio", label: "Branches", icon: GitBranch },
   { to: "/world", label: "World", icon: Globe2 },
   { to: "/labs", label: "Produce", icon: Clapperboard },
 ] as const;
