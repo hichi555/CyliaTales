@@ -35,15 +35,15 @@ export function Globe({ className }: { className?: string }) {
       mapBrightness: 6,
       baseColor: [0.3, 0.3, 0.3],
       markerColor: [0.1, 0.8, 1],
-      glowColor:,
+      glowColor: [0.78, 0.52, 0.28],
       markers: [{ location: [36.8065, 10.1815], size: 0.1 }],
       onRender: (state) => {
         if (!pointerInteracting.current) {
           r.set(r.get() + 0.005);
         }
-        state.phi = rs.get();
-        state.width = width * 2;
-        state.height = width * 2;
+        state["phi"] = rs.get();
+        state["width"] = width * 2;
+        state["height"] = width * 2;
       },
     });
 

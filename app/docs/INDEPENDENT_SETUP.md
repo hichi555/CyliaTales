@@ -18,9 +18,9 @@ Use the project URL and publishable/anon key from your own Supabase project's AP
 Install and validate:
 
 ```bash
-npm install
-npm run validate:production
-npm run dev
+pnpm install
+pnpm validate:production
+pnpm dev
 ```
 
 ## 2. Google sign-in

@@ -14,12 +14,12 @@ The product is built around continuity and authorship: define the world once, in
 
 ## Run CyliaTales locally
 
-The repository uses Vite, React, TanStack Start, TanStack Router, and TanStack Query. It includes a committed `package-lock.json`, so use npm for a clean local installation.
+The repository uses Vite, React, TanStack Start, TanStack Router, and TanStack Query. It includes a committed `pnpm-lock.yaml`, so use pnpm for a reproducible local installation.
 
 ```bash
 git clone https://github.com/hichi555/CyliaTales.git
 cd CyliaTales/app
-npm ci
+pnpm install --frozen-lockfile
 cp .env.example .env
 ```
 
@@ -35,7 +35,7 @@ VITE_APP_URL="http://localhost:8080"
 Start the local studio:
 
 ```bash
-npm run dev -- --host 127.0.0.1 --port 8080
+pnpm dev --host 127.0.0.1 --port 8080
 ```
 
 Then open [http://localhost:8080](http://localhost:8080). This works only after the command is running on the same computer as the browser. A sandbox `localhost` is not the same machine as your personal computer.
@@ -52,6 +52,6 @@ If you are using a deployed HTTPS domain instead, set `VITE_APP_URL` to that exa
 ## Verification commands
 
 ```bash
-npm run typecheck
-npm run build
+pnpm typecheck
+pnpm build
 ```

@@ -25,10 +25,15 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: npm
+          cache: pnpm
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
 
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       - name: Check for unresolved merge conflicts
         run: |
@@ -38,8 +43,5 @@ jobs:
             exit 1
           fi
 
-      # Runs typecheck, lint and build in sequence — the same gate used
-      # locally via `npm run validate:production`, so CI and local runs
-      # can never silently drift apart.
       - name: Typecheck, lint & build
-        run: npm run validate:production
+        run: pnpm run validate:production

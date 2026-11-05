@@ -3,6 +3,7 @@
   "private": true,
   "sideEffects": false,
   "type": "module",
+  "packageManager": "pnpm@11.25.0",
   "scripts": {
     "dev": "vite dev",
     "build": "vite build",
@@ -10,7 +11,7 @@
     "typecheck": "tsc --noEmit",
     "lint:production": "eslint . --quiet --rule 'prettier/prettier: off'",
     "test": "vitest run",
-    "validate:production": "npm run typecheck && npm run lint:production && npm run test && npm run build",
+    "validate:production": "pnpm run typecheck && pnpm run lint:production && pnpm run test && pnpm run build",
     "preview": "vite preview",
     "lint": "eslint .",
     "format": "prettier --write ."

@@ -4,12 +4,12 @@
 
 Every change to `main` and every pull request runs:
 
-1. `npm ci`
-2. `npm run typecheck`
-3. `npm run lint -- --quiet`
-4. `npm run build`
+1. `pnpm install --frozen-lockfile`
+2. `pnpm typecheck`
+3. `pnpm lint -- --quiet`
+4. `pnpm build`
 
-The same sequence is available locally as `npm run validate:production`.
+The same sequence is available locally as `pnpm validate:production`.
 
 ## Current validated capabilities
 

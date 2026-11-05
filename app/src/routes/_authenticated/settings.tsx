@@ -3,6 +3,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
 import {
+  Activity,
   Accessibility,
   BookOpenText,
   Check,
@@ -48,6 +49,7 @@ type Preferences = {
   highContrast: boolean;
   reducedMotion: boolean;
   privateByDefault: boolean;
+  workspaceTelemetry: boolean;
   reviewBeforeProduction: boolean;
   defaultPages: "8" | "12" | "16";
   artDirection: string;
@@ -61,6 +63,7 @@ const DEFAULTS: Preferences = {
   highContrast: false,
   reducedMotion: false,
   privateByDefault: true,
+  workspaceTelemetry: true,
   reviewBeforeProduction: true,
   defaultPages: "12",
   artDirection: ART_DIRECTION_BOARDS[0].id,
@@ -410,6 +413,13 @@ function SettingsPage() {
                 description="New stories remain private until you deliberately share or publish them."
                 checked={preferences.privateByDefault}
                 onCheckedChange={(value) => update("privateByDefault", value)}
+              />
+              <SettingRow
+                icon={Activity}
+                title="Workspace telemetry"
+                description="Show production health and delivery metrics inside your private studio. This uses saved workspace records, not personal tracking."
+                checked={preferences.workspaceTelemetry}
+                onCheckedChange={(value) => update("workspaceTelemetry", value)}
               />
             </div>
           </section>

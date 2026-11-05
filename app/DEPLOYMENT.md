@@ -19,7 +19,7 @@ explicitly. On the Cloudflare project, add a **build environment variable**:
 NITRO_PRESET=cloudflare-module
 ```
 
-That's read by `nitro.config.ts` at the repo root. With it set, `npm run build` produces
+That's read by `nitro.config.ts` at the repo root. With it set, `pnpm build` produces
 `.output/server/wrangler.json` and `.wrangler/deploy/config.json` — a real, deployable
 Cloudflare Workers bundle. Without it (or on any other platform), `nitro.config.ts` is a
 no-op and the default Node-targeted build is produced instead.

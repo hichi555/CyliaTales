@@ -29,6 +29,7 @@ import { Button } from "@/components/ui/button";
 import { BookCard } from "./stories.index";
 import { BorderBeam } from "@/components/magicui/border-beam";
 import { DotPattern } from "@/components/magicui/dot-pattern";
+import { TelemetryDashboard } from "@/components/TelemetryDashboard";
 
 export const Route = createFileRoute("/_authenticated/studio")({
   head: () => ({
@@ -190,6 +191,7 @@ function Studio() {
           </div>
         ))}
       </section>
+      <TelemetryDashboard />
       <section className="studio-surface mb-10 rounded-3xl border bg-card p-6 shadow-soft md:p-8">
         <BorderBeam size={100} duration={14} delay={2} colorFrom="var(--primary)" colorTo="var(--accent)" />
         <div className="flex flex-wrap items-start justify-between gap-5">
