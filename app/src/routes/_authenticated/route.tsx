@@ -13,6 +13,7 @@ import {
   Compass,
   GitBranch,
   Sparkles,
+  ShieldCheck,
 } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
 import { Button } from "@/components/ui/button";
@@ -82,6 +83,14 @@ function StudioLayout() {
     <div className="flex min-h-screen bg-background studio-shell">
       <aside className="studio-sidebar sticky top-0 hidden h-screen w-64 shrink-0 flex-col bg-sidebar p-5 text-sidebar-foreground md:flex">
         <Logo light />
+        <div className="mt-8 rounded-xl border border-sidebar-border bg-sidebar-accent/45 p-3">
+          <div className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-sidebar-foreground/60">
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+            Private workspace
+          </div>
+          <p className="mt-2 text-sm font-semibold text-sidebar-foreground">Story Studio</p>
+          <p className="mt-1 text-xs leading-5 text-sidebar-foreground/60">Your world, in continuity.</p>
+        </div>
         <nav className="mt-10 flex-1 space-y-7">
           {NAV.map((g) => (
             <div key={g.group}>
@@ -94,9 +103,10 @@ function StudioLayout() {
                     <Link
                       to={i.to}
                       activeOptions={{ exact: true }}
-                      className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-sidebar-foreground/80 transition hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+                      className="studio-nav-link flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-sidebar-foreground/80 transition hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
                       activeProps={{
-                        className: "bg-sidebar-accent !text-sidebar-primary font-semibold",
+                        className: "studio-nav-link bg-sidebar-accent !text-sidebar-primary font-semibold",
+                        "data-status": "active",
                       }}
                     >
                       <i.icon className="h-4 w-4" /> {i.label}
@@ -108,6 +118,9 @@ function StudioLayout() {
           ))}
         </nav>
         <div className="border-t border-sidebar-border pt-4">
+          <div className="mb-4 flex items-center gap-2 px-3 text-xs text-sidebar-foreground/60">
+            <ShieldCheck className="h-3.5 w-3.5 text-emerald-400" /> Autosave and privacy on
+          </div>
           <p className="truncate px-3 text-xs text-sidebar-foreground/60">{user?.email}</p>
           <SignOutButton />
         </div>
@@ -121,6 +134,10 @@ function StudioLayout() {
             CyliaTales <span className="px-2 text-border">/</span> Story studio
           </p>
           <div className="flex items-center gap-2">
+            <div className="hidden items-center gap-2 rounded-full border bg-background/80 px-3 py-1.5 text-xs text-muted-foreground lg:flex">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+              Workspace ready
+            </div>
             <Button asChild variant="outline" size="sm">
               <Link to="/stories/new">
                 <PenTool /> New story

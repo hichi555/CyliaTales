@@ -27,6 +27,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { PageHeader } from "@/components/PageHeader";
 import { Button } from "@/components/ui/button";
 import { BookCard } from "./stories.index";
+import { BorderBeam } from "@/components/magicui/border-beam";
+import { DotPattern } from "@/components/magicui/dot-pattern";
 
 export const Route = createFileRoute("/_authenticated/studio")({
   head: () => ({
@@ -100,9 +102,13 @@ function Studio() {
           </Button>
         }
       />
-      <div className="production-desk mb-8 border-y py-7">
+      <div className="studio-surface production-desk mb-8 rounded-2xl border px-6 py-7 md:px-7">
+        <DotPattern dotColor="var(--primary)" />
+        <BorderBeam size={90} duration={10} colorFrom="var(--accent)" colorTo="var(--primary)" />
         <div>
-          <p className="text-xs font-semibold uppercase text-primary">On your desk</p>
+          <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-primary">
+            <span className="h-1.5 w-1.5 rounded-full bg-accent" /> On your desk
+          </div>
           <h2 className="mt-2 text-2xl font-semibold">
             {stories[0]?.title ?? "Your next story starts here"}
           </h2>
@@ -172,7 +178,7 @@ function Studio() {
             tone: "text-amber-700",
           },
         ].map(({ label, value, detail, icon: Icon, tone }) => (
-          <div key={label} className="rounded-2xl border bg-card p-5 shadow-soft">
+          <div key={label} className="studio-kpi rounded-2xl border bg-card p-5 shadow-soft">
             <div className="flex items-center justify-between gap-3">
               <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
                 {label}
@@ -184,7 +190,8 @@ function Studio() {
           </div>
         ))}
       </section>
-      <section className="mb-10 rounded-3xl border bg-card p-6 shadow-soft md:p-8">
+      <section className="studio-surface mb-10 rounded-3xl border bg-card p-6 shadow-soft md:p-8">
+        <BorderBeam size={100} duration={14} delay={2} colorFrom="var(--primary)" colorTo="var(--accent)" />
         <div className="flex flex-wrap items-start justify-between gap-5">
           <div>
             <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-primary">

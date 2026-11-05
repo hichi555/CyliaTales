@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { Logo } from "@/components/Logo";
 import { Reveal } from "@/components/Reveal";
+import { BorderBeam } from "@/components/magicui/border-beam";
 import { Button } from "@/components/ui/button";
 import { ART_DIRECTION_BOARDS } from "@/lib/art-direction";
 
@@ -200,6 +201,7 @@ function Landing() {
                 aria-hidden="true"
               />
               <figure className="relative overflow-hidden rounded-[1.75rem] border border-white/70 bg-card p-2 shadow-[0_24px_80px_-28px_oklch(0.22_0.03_250/0.45)]">
+                <BorderBeam size={120} duration={11} colorFrom="var(--accent)" colorTo="var(--primary)" />
                 <img
                   src="/assets/cyliatales-hero-showcase.jpg"
                   alt="A child and a lantern fox discover story worlds beneath a starry sky"
@@ -207,7 +209,7 @@ function Landing() {
                   height={1440}
                   className="aspect-[4/3] w-full rounded-[1.25rem] object-cover"
                 />
-                <figcaption className="flex items-center justify-between gap-4 px-4 py-4">
+                <figcaption className="relative z-10 flex items-center justify-between gap-4 bg-card px-4 py-4">
                   <div>
                     <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
                       A finished story, in progress
