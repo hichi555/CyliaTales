@@ -1331,3 +1331,104 @@
     padding: 0.8rem 0 0;
   }
 }
+
+
+/* --------------------------------------------------------------------------
+   CyliaTales Editorial Signal refresh
+   A deliberate visual layer for the product: ink, paper, and one signal color.
+   -------------------------------------------------------------------------- */
+:root {
+  --background: oklch(0.975 0.008 92);
+  --foreground: oklch(0.18 0.025 82);
+  --card: oklch(0.995 0.004 92);
+  --card-foreground: oklch(0.18 0.025 82);
+  --popover: oklch(0.995 0.004 92);
+  --popover-foreground: oklch(0.18 0.025 82);
+  --primary: oklch(0.27 0.045 166);
+  --primary-foreground: oklch(0.98 0.008 92);
+  --secondary: oklch(0.94 0.012 92);
+  --secondary-foreground: oklch(0.23 0.03 82);
+  --muted: oklch(0.945 0.01 92);
+  --muted-foreground: oklch(0.48 0.025 82);
+  --accent: oklch(0.91 0.18 112);
+  --accent-foreground: oklch(0.2 0.04 90);
+  --border: oklch(0.86 0.018 82);
+  --input: oklch(0.86 0.018 82);
+  --ring: oklch(0.68 0.15 112);
+  --sidebar: oklch(0.19 0.035 168);
+  --sidebar-foreground: oklch(0.95 0.01 92);
+  --sidebar-primary: oklch(0.91 0.18 112);
+  --sidebar-primary-foreground: oklch(0.2 0.04 90);
+  --sidebar-accent: oklch(0.25 0.045 168);
+  --sidebar-accent-foreground: oklch(0.98 0.008 92);
+  --sidebar-border: oklch(0.34 0.04 168);
+  --shadow-soft: 0 16px 48px -30px oklch(0.18 0.025 82 / 0.42);
+}
+
+html { background: var(--background); }
+body {
+  background:
+    radial-gradient(circle at 82% -12%, oklch(0.91 0.18 112 / 0.12), transparent 30rem),
+    var(--background);
+  color: var(--foreground);
+}
+button, a, input, textarea, select { -webkit-tap-highlight-color: transparent; }
+button, [role="button"] { transition: transform 140ms cubic-bezier(0.23, 1, 0.32, 1), background-color 180ms ease-out, border-color 180ms ease-out, box-shadow 180ms ease-out; }
+button:active, [role="button"]:active { transform: scale(0.975); }
+:focus-visible { outline: 2px solid var(--ring); outline-offset: 3px; }
+
+/* Replace over-soft startup styling with authored, editorial edges. */
+.rounded-2xl { border-radius: 0.9rem; }
+.rounded-3xl { border-radius: 1.2rem; }
+.shadow-soft { box-shadow: var(--shadow-soft); }
+.workspace-card,
+.studio-kpi,
+.studio-surface,
+.production-card,
+.character-workbench {
+  border-radius: 0.9rem;
+  box-shadow: var(--shadow-soft);
+}
+.workspace-card { background: color-mix(in oklch, var(--card) 96%, var(--secondary)); }
+.workspace-card::before { background: var(--accent); height: 2px; opacity: 1; transform: scaleX(0.18); transition: transform 220ms cubic-bezier(0.23, 1, 0.32, 1); }
+.workspace-card:hover::before { transform: scaleX(1); }
+.workspace-card:hover { border-color: color-mix(in oklch, var(--primary) 35%, var(--border)); }
+
+/* Landing page: more contrast, less “template”; let the words lead. */
+body > div > header,
+header.sticky { background: color-mix(in oklch, var(--background) 92%, transparent) !important; border-color: color-mix(in oklch, var(--foreground) 14%, transparent) !important; }
+body h1 { letter-spacing: -0.045em; }
+body h2 { letter-spacing: -0.035em; }
+.bg-hero { background-image: linear-gradient(135deg, oklch(0.97 0.01 92), oklch(0.95 0.03 110) 55%, oklch(0.91 0.07 124)); }
+.bg-grain::after { opacity: 0.28; }
+
+/* Authenticated shell: a real working desk, not a generic dashboard. */
+.studio-shell { --background: oklch(0.975 0.008 92); --primary: oklch(0.27 0.045 166); --secondary: oklch(0.94 0.012 92); --border: oklch(0.86 0.018 82); }
+.studio-shell .studio-topbar { background: color-mix(in oklch, var(--card) 94%, transparent); border-color: var(--border); }
+.studio-shell .studio-nav-link[data-status="active"] { background: var(--sidebar-accent); color: var(--sidebar-foreground); }
+.studio-shell .studio-nav-link[data-status="active"]::before { background: var(--accent); width: 2px; }
+.studio-shell .studio-sidebar { background: var(--sidebar); border-color: var(--sidebar-border); }
+.studio-shell .studio-sidebar a, .studio-shell .studio-sidebar button { color: color-mix(in oklch, var(--sidebar-foreground) 72%, transparent); }
+.studio-shell .studio-sidebar a:hover, .studio-shell .studio-sidebar button:hover { color: var(--sidebar-foreground); background: var(--sidebar-accent); }
+.studio-shell .studio-surface { background: var(--card); border-color: var(--border); }
+.studio-shell .studio-surface::before { content: ""; position: absolute; inset: 0 auto auto 0; width: 100%; height: 2px; background: var(--accent); opacity: 0.85; }
+.studio-shell .studio-kpi { background: color-mix(in oklch, var(--card) 96%, var(--secondary)); }
+.studio-shell .studio-kpi:hover { transform: translateY(-3px); border-color: color-mix(in oklch, var(--primary) 34%, var(--border)); }
+.studio-shell .production-steps svg { color: var(--primary); }
+
+/* Cards read as designed blocks; icon tiles get a crisp signal edge. */
+.workspace-icon, .voice-icon { border: 1px solid color-mix(in oklch, var(--primary) 16%, var(--border)); border-radius: 0.7rem; }
+.workspace-card h3, .studio-shell h2 { text-wrap: balance; }
+.studio-mobile-nav { background: var(--sidebar); color: var(--sidebar-foreground); border-color: var(--sidebar-border); }
+.studio-mobile-nav a { color: color-mix(in oklch, var(--sidebar-foreground) 72%, transparent); }
+.studio-mobile-nav a:hover { color: var(--sidebar-foreground); background: var(--sidebar-accent); }
+
+@media (max-width: 767px) {
+  .studio-topbar { padding-inline: 1rem; }
+  .studio-shell main { padding-inline: 1rem; }
+  .production-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 0.75rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: 0.01ms !important; }
+}

@@ -157,19 +157,19 @@ function Landing() {
               </Reveal>
               <Reveal delay={80}>
                 <h1 className="mt-7 max-w-2xl text-5xl font-semibold leading-[0.98] tracking-[-0.03em] text-foreground md:text-7xl">
-                  Make stories worth{" "}
+                  Make a story your family keeps{" "}
                   <em className="font-display font-normal text-primary">keeping.</em>
                 </h1>
               </Reveal>
               <Reveal delay={160}>
                 <p className="mt-7 max-w-xl text-lg leading-8 text-muted-foreground">
-                  CyliaTales brings writing, character direction, illustration, narration and motion
-                  into one calm, review-first workspace. Your story stays yours at every step.
+                  A focused studio for the part that matters: turning a small idea into a story with
+                  a voice, a world and a reason to come back to it. Review every meaningful step.
                 </p>
               </Reveal>
               <Reveal delay={240}>
                 <div className="mt-9 flex flex-wrap gap-3">
-                  <Button size="lg" asChild>
+                  <Button size="lg" className="shadow-[0_12px_28px_-16px_oklch(0.27_0.045_166/0.8)]" asChild>
                     <Link to="/auth">
                       Create your first story <ArrowRight />
                     </Link>
