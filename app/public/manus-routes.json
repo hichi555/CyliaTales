@@ -6,6 +6,7 @@
     { "path": "/explore", "title": "Explore" },
     { "path": "/explore/:id", "title": "Explore story" },
     { "path": "/studio", "title": "Studio" },
+    { "path": "/story-loom", "title": "Story Loom" },
     { "path": "/stories", "title": "My books" },
     { "path": "/stories/new", "title": "New story" },
     { "path": "/branch-studio", "title": "Branch Studio" },

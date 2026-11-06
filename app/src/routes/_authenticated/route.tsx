@@ -13,6 +13,7 @@ import {
   Compass,
   GitBranch,
   Sparkles,
+  WandSparkles,
   ShieldCheck,
 } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
@@ -32,6 +33,7 @@ const NAV = [
       { to: "/studio", label: "Overview", icon: LayoutGrid },
       { to: "/stories/new", label: "New story", icon: PenTool },
       { to: "/branch-studio", label: "Branch Studio", icon: GitBranch },
+      { to: "/story-loom", label: "Story Loom", icon: WandSparkles },
       { to: "/world", label: "Story World", icon: Globe2 },
       { to: "/create", label: "Story formats", icon: Sparkles },
     ],

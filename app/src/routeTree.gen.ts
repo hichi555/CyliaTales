@@ -22,6 +22,7 @@ import { Route as AuthenticatedCharactersRouteImport } from './routes/_authentic
 import { Route as AuthenticatedCreateRouteImport } from './routes/_authenticated/create'
 import { Route as AuthenticatedLabsRouteImport } from './routes/_authenticated/labs'
 import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
+import { Route as AuthenticatedStoryLoomRouteImport } from './routes/_authenticated/story-loom'
 import { Route as AuthenticatedStudioRouteImport } from './routes/_authenticated/studio'
 import { Route as AuthenticatedVoicesRouteImport } from './routes/_authenticated/voices'
 import { Route as AuthenticatedWorldRouteImport } from './routes/_authenticated/world'
@@ -97,6 +98,11 @@ const AuthenticatedSettingsRoute = AuthenticatedSettingsRouteImport.update({
   path: '/settings',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedStoryLoomRoute = AuthenticatedStoryLoomRouteImport.update({
+  id: '/story-loom',
+  path: '/story-loom',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedStudioRoute = AuthenticatedStudioRouteImport.update({
   id: '/studio',
   path: '/studio',
@@ -157,6 +163,7 @@ export interface FileRoutesByFullPath {
   '/create': typeof AuthenticatedCreateRoute
   '/labs': typeof AuthenticatedLabsRoute
   '/settings': typeof AuthenticatedSettingsRoute
+  '/story-loom': typeof AuthenticatedStoryLoomRoute
   '/studio': typeof AuthenticatedStudioRoute
   '/voices': typeof AuthenticatedVoicesRoute
   '/world': typeof AuthenticatedWorldRoute
@@ -180,6 +187,7 @@ export interface FileRoutesByTo {
   '/create': typeof AuthenticatedCreateRoute
   '/labs': typeof AuthenticatedLabsRoute
   '/settings': typeof AuthenticatedSettingsRoute
+  '/story-loom': typeof AuthenticatedStoryLoomRoute
   '/studio': typeof AuthenticatedStudioRoute
   '/voices': typeof AuthenticatedVoicesRoute
   '/world': typeof AuthenticatedWorldRoute
@@ -205,6 +213,7 @@ export interface FileRoutesById {
   '/_authenticated/create': typeof AuthenticatedCreateRoute
   '/_authenticated/labs': typeof AuthenticatedLabsRoute
   '/_authenticated/settings': typeof AuthenticatedSettingsRoute
+  '/_authenticated/story-loom': typeof AuthenticatedStoryLoomRoute
   '/_authenticated/studio': typeof AuthenticatedStudioRoute
   '/_authenticated/voices': typeof AuthenticatedVoicesRoute
   '/_authenticated/world': typeof AuthenticatedWorldRoute
@@ -230,6 +239,7 @@ export interface FileRouteTypes {
     | '/create'
     | '/labs'
     | '/settings'
+    | '/story-loom'
     | '/studio'
     | '/voices'
     | '/world'
@@ -253,6 +263,7 @@ export interface FileRouteTypes {
     | '/create'
     | '/labs'
     | '/settings'
+    | '/story-loom'
     | '/studio'
     | '/voices'
     | '/world'
@@ -277,6 +288,7 @@ export interface FileRouteTypes {
     | '/_authenticated/create'
     | '/_authenticated/labs'
     | '/_authenticated/settings'
+    | '/_authenticated/story-loom'
     | '/_authenticated/studio'
     | '/_authenticated/voices'
     | '/_authenticated/world'
@@ -391,6 +403,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedSettingsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/story-loom': {
+      id: '/_authenticated/story-loom'
+      path: '/story-loom'
+      fullPath: '/story-loom'
+      preLoaderRoute: typeof AuthenticatedStoryLoomRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/studio': {
       id: '/_authenticated/studio'
       path: '/studio'
@@ -464,6 +483,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedCreateRoute: typeof AuthenticatedCreateRoute
   AuthenticatedLabsRoute: typeof AuthenticatedLabsRoute
   AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
+  AuthenticatedStoryLoomRoute: typeof AuthenticatedStoryLoomRoute
   AuthenticatedStudioRoute: typeof AuthenticatedStudioRoute
   AuthenticatedVoicesRoute: typeof AuthenticatedVoicesRoute
   AuthenticatedWorldRoute: typeof AuthenticatedWorldRoute
@@ -480,6 +500,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedCreateRoute: AuthenticatedCreateRoute,
   AuthenticatedLabsRoute: AuthenticatedLabsRoute,
   AuthenticatedSettingsRoute: AuthenticatedSettingsRoute,
+  AuthenticatedStoryLoomRoute: AuthenticatedStoryLoomRoute,
   AuthenticatedStudioRoute: AuthenticatedStudioRoute,
   AuthenticatedVoicesRoute: AuthenticatedVoicesRoute,
   AuthenticatedWorldRoute: AuthenticatedWorldRoute,

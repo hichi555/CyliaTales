@@ -22,6 +22,7 @@ import {
   Sparkles,
   TrendingUp,
   UserRound,
+  WandSparkles,
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { PageHeader } from "@/components/PageHeader";
@@ -67,6 +68,12 @@ function Studio() {
   const approvedStories = stories.filter((story) => story.status === "complete").length;
   const continuityScore = Math.min(100, 42 + cast * 12 + voices * 8 + (stories.length ? 24 : 0));
   const tiles = [
+    {
+      to: "/story-loom",
+      icon: WandSparkles,
+      title: "Story Loom",
+      body: "Turn a premise into connected beats, choices and scene-ready direction.",
+    },
     {
       to: "/stories/new",
       icon: PenTool,
