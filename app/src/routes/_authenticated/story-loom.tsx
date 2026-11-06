@@ -270,7 +270,7 @@ function StoryLoom() {
               {index < nodes.length - 1 && <div className="loom-connector" aria-hidden="true"><span /></div>}
             </div>
           ))}
-          <button type="button" className="loom-add-node" onClick={generatePath}><Plus /><span><strong>Ask the Loom</strong><small>Generate a connected next beat</small></span></button>
+          <button type="button" className="loom-add-node" onClick={generatePath}><Plus /><span><strong>Ask Cyliagen</strong><small>Generate a connected next beat</small></span></button>
         </div>
       </section>
 

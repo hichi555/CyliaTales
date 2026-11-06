@@ -184,6 +184,14 @@ function Landing() {
                 </div>
               </Reveal>
               <Reveal delay={320}>
+                <div className="mt-6 flex flex-wrap items-center gap-2 text-xs font-semibold text-muted-foreground">
+                  <span className="mr-1 uppercase tracking-[0.14em] text-primary">One world</span>
+                  {['Illustrated books', 'Moving storyboards', 'Narrated scenes', 'Learning extensions'].map((format) => (
+                    <span key={format} className="rounded-full border bg-card/70 px-3 py-1.5">{format}</span>
+                  ))}
+                </div>
+              </Reveal>
+              <Reveal delay={380}>
                 <div className="mt-11 grid max-w-xl grid-cols-2 gap-x-5 gap-y-3 border-t border-border/70 pt-6 sm:grid-cols-4">
                   {TRUST_POINTS.map(({ icon: Icon, label }) => (
                     <div
