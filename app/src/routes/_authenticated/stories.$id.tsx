@@ -46,13 +46,13 @@ import {
 export const Route = createFileRoute("/_authenticated/stories/$id")({
   head: () => ({
     meta: [
-      { title: "Book editor — CyliaTales" },
+      { title: "Book editor — Cyliagen Story" },
       { name: "robots", content: "noindex" },
       {
         name: "description",
         content: "Edit illustrations and story text, save narration and read your book.",
       },
-      { property: "og:title", content: "Book editor — CyliaTales" },
+      { property: "og:title", content: "Book editor — Cyliagen Story" },
       {
         property: "og:description",
         content: "Edit illustrations and story text, save narration and read your book.",

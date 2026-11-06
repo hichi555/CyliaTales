@@ -12,7 +12,7 @@ import { useAuth } from "@/hooks/use-auth";
 import { generateStory } from "@/lib/studio.functions";
 
 export const Route = createFileRoute("/_authenticated/remix/$id")({
-  head: () => ({ meta: [{ title: "Continue story — CyliaTales" }] }),
+  head: () => ({ meta: [{ title: "Continue story — Cyliagen Story" }] }),
   component: RemixStory,
 });
 type Draft = { title: string; coverPrompt: string; pages: { text: string; imagePrompt: string }[] };

@@ -339,7 +339,7 @@ export function BookReader({
               <Art path={coverArt} alt={`${title} cover`} />
             </div>
             <div className="flip-cover-title">
-              <span>A CyliaTales book</span>
+              <span>A Cyliagen Story book</span>
               <h1>{title}</h1>
             </div>
           </Leaf>
@@ -371,7 +371,7 @@ export function BookReader({
           <Leaf hard className="flip-cover flip-back">
             <div className="flip-cover-title">
               <h1>The end</h1>
-              <span>Made with CyliaTales</span>
+              <span>Made with Cyliagen Story</span>
             </div>
           </Leaf>
         </Flip>

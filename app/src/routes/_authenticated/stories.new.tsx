@@ -32,13 +32,13 @@ export const Route = createFileRoute("/_authenticated/stories/new")({
   }),
   head: () => ({
     meta: [
-      { title: "New story — CyliaTales" },
+      { title: "New story — Cyliagen Story" },
       { name: "robots", content: "noindex" },
       {
         name: "description",
         content: "Choose reader age, cast, art direction and narrator for a new original book.",
       },
-      { property: "og:title", content: "New story — CyliaTales" },
+      { property: "og:title", content: "New story — Cyliagen Story" },
       {
         property: "og:description",
         content: "Choose reader age, cast, art direction and narrator for a new original book.",
@@ -355,7 +355,7 @@ function NewStory() {
               </div>
             </div>
           </Section>
-          <Section title="4. CyliaTales art direction">
+          <Section title="4. Cyliagen Story art direction">
             <p className="mb-4 max-w-2xl text-sm leading-6 text-muted-foreground">
               Choose a visual world with a real production board. This direction is carried into
               every illustration prompt and stays attached to the story.
@@ -559,7 +559,7 @@ function NewStory() {
           <div className="mt-3 rounded-2xl border border-primary/20 bg-primary/5 p-5 text-sm leading-6">
             <p className="font-semibold">A considered first draft</p>
             <p className="mt-1 text-muted-foreground">
-              CyliaTales keeps the story editable until the world, pacing and page plan feel right.
+              Cyliagen Story keeps the story editable until the world, pacing and page plan feel right.
             </p>
           </div>
         </aside>

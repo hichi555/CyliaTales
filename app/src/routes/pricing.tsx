@@ -9,7 +9,7 @@ import { COMMERCIAL_ADDON, PLANS } from "@/lib/plans";
 export const Route = createFileRoute("/pricing")({
   head: () => ({
     meta: [
-      { title: "Pricing — CyliaTales" },
+      { title: "Pricing — Cyliagen Story" },
       {
         name: "description",
         content:
@@ -39,7 +39,7 @@ function Pricing() {
           </h1>
           <p className="mt-4 max-w-2xl text-muted-foreground">
             Most AI storybook tools sell you a monthly pool of credits that expires whether you use
-            it or not. CyliaTales is the opposite of a subscription: one payment unlocks a standing
+            it or not. Cyliagen Story is the opposite of a subscription: one payment unlocks a standing
             monthly allowance that's yours for as long as your account exists.
           </p>
         </Reveal>
@@ -98,7 +98,7 @@ function Pricing() {
 
         <p className="mx-auto mt-10 max-w-2xl text-center text-xs text-muted-foreground">
           The monthly allowance resets each month and doesn't roll over or stack. It's sized for how
-          families actually use CyliaTales — a book or two a month, read and re-read — not for bulk
+          families actually use Cyliagen Story — a book or two a month, read and re-read — not for bulk
           production, which is what keeps one $89 payment honorable indefinitely.
         </p>
 

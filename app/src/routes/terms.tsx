@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Logo } from "@/components/Logo";
 
 export const Route = createFileRoute("/terms")({
-  head: () => ({ meta: [{ title: "Terms of Service — CyliaTales" }] }),
+  head: () => ({ meta: [{ title: "Terms of Service — Cyliagen Story" }] }),
   component: Terms,
 });
 
@@ -31,7 +31,7 @@ function Terms() {
           <section>
             <h2 className="text-base font-semibold">1. Who this is for</h2>
             <p className="mt-2 text-muted-foreground">
-              CyliaTales is intended for use by parents, guardians, and educators creating
+              Cyliagen Story is intended for use by parents, guardians, and educators creating
               storybooks for children — not for direct, unsupervised use by children themselves. An
               account holder must be an adult.
             </p>
@@ -39,7 +39,7 @@ function Terms() {
           <section>
             <h2 className="text-base font-semibold">2. Plans and billing</h2>
             <p className="mt-2 text-muted-foreground">
-              Preview Studio is free. CyliaTales Lifetime is a single, one-time payment of $89 that
+              Preview Studio is free. Cyliagen Story Lifetime is a single, one-time payment of $89 that
               is not billed again; it includes a monthly production allowance (currently 2 books, 2
               narrations, and 1 motion scene) that resets each month, does not roll over, and is not
               transferable between accounts. We may adjust the allowance for new purchases going
@@ -69,7 +69,7 @@ function Terms() {
           <section>
             <h2 className="text-base font-semibold">5. Acceptable use</h2>
             <p className="mt-2 text-muted-foreground">
-              CyliaTales is a children's storytelling tool. Don't use it to generate content that is
+              Cyliagen Story is a children's storytelling tool. Don't use it to generate content that is
               sexual, violent, hateful, or otherwise inappropriate for a children's product. We may
               remove content or suspend accounts that violate this.
             </p>

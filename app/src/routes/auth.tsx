@@ -12,12 +12,12 @@ import hero from "@/assets/hero.jpg";
 export const Route = createFileRoute("/auth")({
   head: () => ({
     meta: [
-      { title: "Sign in — CyliaTales" },
+      { title: "Sign in — Cyliagen Story" },
       {
         name: "description",
-        content: "Sign in or create your CyliaTales account to start making stories.",
+        content: "Sign in or create your Cyliagen Story account to start making stories.",
       },
-      { property: "og:title", content: "Sign in — CyliaTales" },
+      { property: "og:title", content: "Sign in — Cyliagen Story" },
       { property: "og:description", content: "Access your story studio." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -40,7 +40,7 @@ function AuthPage() {
   const configuredOrigin = import.meta.env["VITE_APP_URL"] as string | undefined;
   const browserOrigin =
     typeof window === "undefined" ? (configuredOrigin ?? "") : window.location.origin;
-  // Use this same CyliaTales deployment unless its public URL is explicitly configured.
+  // Use this same Cyliagen Story deployment unless its public URL is explicitly configured.
   const localOrigin =
     typeof window !== "undefined" &&
     (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1");

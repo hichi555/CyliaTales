@@ -1331,3 +1331,173 @@
     padding: 0.8rem 0 0;
   }
 }
+
+
+/* --------------------------------------------------------------------------
+   Cyliagen Story Editorial Signal refresh
+   A deliberate visual layer for the product: ink, paper, and one signal color.
+   -------------------------------------------------------------------------- */
+:root {
+  --background: oklch(0.975 0.008 92);
+  --foreground: oklch(0.18 0.025 82);
+  --card: oklch(0.995 0.004 92);
+  --card-foreground: oklch(0.18 0.025 82);
+  --popover: oklch(0.995 0.004 92);
+  --popover-foreground: oklch(0.18 0.025 82);
+  --primary: oklch(0.27 0.045 166);
+  --primary-foreground: oklch(0.98 0.008 92);
+  --secondary: oklch(0.94 0.012 92);
+  --secondary-foreground: oklch(0.23 0.03 82);
+  --muted: oklch(0.945 0.01 92);
+  --muted-foreground: oklch(0.48 0.025 82);
+  --accent: oklch(0.91 0.18 112);
+  --accent-foreground: oklch(0.2 0.04 90);
+  --border: oklch(0.86 0.018 82);
+  --input: oklch(0.86 0.018 82);
+  --ring: oklch(0.68 0.15 112);
+  --sidebar: oklch(0.19 0.035 168);
+  --sidebar-foreground: oklch(0.95 0.01 92);
+  --sidebar-primary: oklch(0.91 0.18 112);
+  --sidebar-primary-foreground: oklch(0.2 0.04 90);
+  --sidebar-accent: oklch(0.25 0.045 168);
+  --sidebar-accent-foreground: oklch(0.98 0.008 92);
+  --sidebar-border: oklch(0.34 0.04 168);
+  --shadow-soft: 0 16px 48px -30px oklch(0.18 0.025 82 / 0.42);
+}
+
+html { background: var(--background); }
+body {
+  background:
+    radial-gradient(circle at 82% -12%, oklch(0.91 0.18 112 / 0.12), transparent 30rem),
+    var(--background);
+  color: var(--foreground);
+}
+button, a, input, textarea, select { -webkit-tap-highlight-color: transparent; }
+button, [role="button"] { transition: transform 140ms cubic-bezier(0.23, 1, 0.32, 1), background-color 180ms ease-out, border-color 180ms ease-out, box-shadow 180ms ease-out; }
+button:active, [role="button"]:active { transform: scale(0.975); }
+:focus-visible { outline: 2px solid var(--ring); outline-offset: 3px; }
+
+/* Replace over-soft startup styling with authored, editorial edges. */
+.rounded-2xl { border-radius: 0.9rem; }
+.rounded-3xl { border-radius: 1.2rem; }
+.shadow-soft { box-shadow: var(--shadow-soft); }
+.workspace-card,
+.studio-kpi,
+.studio-surface,
+.production-card,
+.character-workbench {
+  border-radius: 0.9rem;
+  box-shadow: var(--shadow-soft);
+}
+.workspace-card { background: color-mix(in oklch, var(--card) 96%, var(--secondary)); }
+.workspace-card::before { background: var(--accent); height: 2px; opacity: 1; transform: scaleX(0.18); transition: transform 220ms cubic-bezier(0.23, 1, 0.32, 1); }
+.workspace-card:hover::before { transform: scaleX(1); }
+.workspace-card:hover { border-color: color-mix(in oklch, var(--primary) 35%, var(--border)); }
+
+/* Landing page: more contrast, less “template”; let the words lead. */
+body > div > header,
+header.sticky { background: color-mix(in oklch, var(--background) 92%, transparent) !important; border-color: color-mix(in oklch, var(--foreground) 14%, transparent) !important; }
+body h1 { letter-spacing: -0.045em; }
+body h2 { letter-spacing: -0.035em; }
+.bg-hero { background-image: linear-gradient(135deg, oklch(0.97 0.01 92), oklch(0.95 0.03 110) 55%, oklch(0.91 0.07 124)); }
+.bg-grain::after { opacity: 0.28; }
+
+/* Authenticated shell: a real working desk, not a generic dashboard. */
+.studio-shell { --background: oklch(0.975 0.008 92); --primary: oklch(0.27 0.045 166); --secondary: oklch(0.94 0.012 92); --border: oklch(0.86 0.018 82); }
+.studio-shell .studio-topbar { background: color-mix(in oklch, var(--card) 94%, transparent); border-color: var(--border); }
+.studio-shell .studio-nav-link[data-status="active"] { background: var(--sidebar-accent); color: var(--sidebar-foreground); }
+.studio-shell .studio-nav-link[data-status="active"]::before { background: var(--accent); width: 2px; }
+.studio-shell .studio-sidebar { background: var(--sidebar); border-color: var(--sidebar-border); }
+.studio-shell .studio-sidebar a, .studio-shell .studio-sidebar button { color: color-mix(in oklch, var(--sidebar-foreground) 72%, transparent); }
+.studio-shell .studio-sidebar a:hover, .studio-shell .studio-sidebar button:hover { color: var(--sidebar-foreground); background: var(--sidebar-accent); }
+.studio-shell .studio-surface { background: var(--card); border-color: var(--border); }
+.studio-shell .studio-surface::before { content: ""; position: absolute; inset: 0 auto auto 0; width: 100%; height: 2px; background: var(--accent); opacity: 0.85; }
+.studio-shell .studio-kpi { background: color-mix(in oklch, var(--card) 96%, var(--secondary)); }
+.studio-shell .studio-kpi:hover { transform: translateY(-3px); border-color: color-mix(in oklch, var(--primary) 34%, var(--border)); }
+.studio-shell .production-steps svg { color: var(--primary); }
+
+/* Cards read as designed blocks; icon tiles get a crisp signal edge. */
+.workspace-icon, .voice-icon { border: 1px solid color-mix(in oklch, var(--primary) 16%, var(--border)); border-radius: 0.7rem; }
+.workspace-card h3, .studio-shell h2 { text-wrap: balance; }
+.studio-mobile-nav { background: var(--sidebar); color: var(--sidebar-foreground); border-color: var(--sidebar-border); }
+.studio-mobile-nav a { color: color-mix(in oklch, var(--sidebar-foreground) 72%, transparent); }
+.studio-mobile-nav a:hover { color: var(--sidebar-foreground); background: var(--sidebar-accent); }
+
+@media (max-width: 767px) {
+  .studio-topbar { padding-inline: 1rem; }
+  .studio-shell main { padding-inline: 1rem; }
+  .production-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 0.75rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: 0.01ms !important; }
+}
+
+
+/* Cyliagen Studio: a connected narrative canvas, not a generic AI prompt screen. */
+.story-loom-page { max-width: 1480px; margin-inline: auto; }
+.loom-hero { background: linear-gradient(118deg, color-mix(in oklch, var(--card) 90%, var(--accent)) 0%, var(--card) 54%, color-mix(in oklch, var(--card) 90%, var(--primary)) 100%); }
+.loom-hero::after { content: ""; position: absolute; width: 18rem; height: 18rem; right: 8%; bottom: -12rem; border-radius: 999px; background: color-mix(in oklch, var(--accent) 24%, transparent); filter: blur(60px); }
+.loom-pulse, .loom-status-dot { display: inline-block; width: 0.45rem; height: 0.45rem; border-radius: 999px; background: var(--accent); box-shadow: 0 0 0 5px color-mix(in oklch, var(--accent) 20%, transparent); }
+.loom-brief-card { background: color-mix(in oklch, var(--card) 72%, transparent); border-color: color-mix(in oklch, var(--primary) 18%, var(--border)); backdrop-filter: blur(12px); }
+.loom-brief-input { border-color: color-mix(in oklch, var(--primary) 20%, var(--border)); background: color-mix(in oklch, var(--card) 82%, var(--secondary)); line-height: 1.65; }
+.loom-canvas { overflow: hidden; background: linear-gradient(180deg, color-mix(in oklch, var(--card) 97%, var(--secondary)), var(--card)); }
+.loom-canvas-toolbar { display: flex; justify-content: space-between; align-items: center; gap: 1rem; border-bottom: 1px solid var(--border); padding: 0.15rem 0 1rem; }
+.loom-map { display: flex; align-items: stretch; gap: 0; overflow-x: auto; padding: 2rem 0 1rem; scrollbar-width: thin; }
+.loom-map-item { display: flex; min-width: min(30rem, 84vw); align-items: center; }
+.loom-node { position: relative; display: flex; min-height: 11rem; width: 100%; align-items: flex-start; gap: 1rem; overflow: hidden; border: 1px solid var(--border); border-radius: 1rem; padding: 1.1rem; text-align: left; transition: transform 180ms cubic-bezier(0.23, 1, 0.32, 1), border-color 180ms ease-out, box-shadow 180ms ease-out; }
+.loom-node:hover { transform: translateY(-4px); border-color: color-mix(in oklch, var(--primary) 42%, var(--border)); box-shadow: 0 22px 38px -28px oklch(0.18 0.025 82 / 0.65); }
+.loom-node.is-active { border-color: var(--primary); box-shadow: 0 0 0 3px color-mix(in oklch, var(--accent) 45%, transparent), 0 22px 38px -28px oklch(0.18 0.025 82 / 0.65); }
+.loom-node-number { display: grid; width: 2rem; height: 2rem; flex: none; place-items: center; border-radius: 0.55rem; background: color-mix(in oklch, var(--foreground) 8%, transparent); font-family: ui-monospace, SFMono-Regular, monospace; font-size: 0.7rem; font-weight: 700; }
+.loom-node-copy { display: grid; gap: 0.5rem; min-width: 0; }
+.loom-node-copy strong { font-size: 1.15rem; line-height: 1.08; letter-spacing: -0.025em; }
+.loom-node-copy > span:last-child { max-width: 19rem; font-size: 0.82rem; line-height: 1.55; color: var(--muted-foreground); }
+.loom-node-eyebrow, .loom-label { font-size: 0.64rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted-foreground); }
+.loom-node-arrow { position: absolute; right: 1rem; bottom: 1rem; width: 1rem; height: 1rem; color: var(--primary); opacity: 0; transform: translateX(-0.3rem); transition: opacity 160ms ease-out, transform 160ms ease-out; }
+.loom-node:hover .loom-node-arrow, .loom-node.is-active .loom-node-arrow { opacity: 1; transform: translateX(0); }
+.loom-node--lime { background: color-mix(in oklch, var(--accent) 24%, var(--card)); }
+.loom-node--paper { background: color-mix(in oklch, var(--secondary) 78%, var(--card)); }
+.loom-node--ink { background: var(--sidebar); color: var(--sidebar-foreground); border-color: var(--sidebar-border); }
+.loom-node--ink .loom-node-copy > span:last-child, .loom-node--ink .loom-node-eyebrow { color: color-mix(in oklch, var(--sidebar-foreground) 65%, transparent); }
+.loom-node--ink .loom-node-number { background: var(--sidebar-accent); }
+.loom-node--coral { background: color-mix(in oklch, oklch(0.74 0.15 35) 22%, var(--card)); }
+.loom-connector { position: relative; width: 2.2rem; flex: none; height: 2px; background: var(--border); }
+.loom-connector span { position: absolute; left: 50%; top: 50%; width: 0.42rem; height: 0.42rem; border-radius: 999px; background: var(--accent); transform: translate(-50%, -50%); }
+.loom-add-node { display: flex; min-width: 15rem; min-height: 11rem; align-items: center; justify-content: center; gap: 0.7rem; border: 1px dashed color-mix(in oklch, var(--primary) 38%, var(--border)); border-radius: 1rem; color: var(--primary); transition: border-color 180ms ease-out, background-color 180ms ease-out; }
+.loom-add-node:hover { border-color: var(--primary); background: color-mix(in oklch, var(--accent) 10%, transparent); }
+.loom-add-node > svg { width: 1.1rem; }
+.loom-add-node span { display: grid; gap: 0.2rem; text-align: left; }
+.loom-add-node strong { font-size: 0.9rem; }
+.loom-add-node small { color: var(--muted-foreground); }
+.loom-insight-card { background: linear-gradient(130deg, var(--card), color-mix(in oklch, var(--card) 86%, var(--accent))); }
+.loom-metrics-card { background: var(--sidebar); color: var(--sidebar-foreground); border-color: var(--sidebar-border); }
+.loom-metrics-card .loom-label { color: color-mix(in oklch, var(--sidebar-foreground) 65%, transparent); }
+.loom-meter { height: 0.35rem; overflow: hidden; border-radius: 99px; background: var(--sidebar-accent); }
+.loom-meter span { display: block; width: 94%; height: 100%; border-radius: inherit; background: var(--accent); }
+@media (max-width: 640px) {
+  .loom-canvas-toolbar { align-items: flex-start; flex-direction: column; }
+  .loom-map { margin-inline: -0.5rem; padding-inline: 0.5rem; }
+  .loom-map-item { min-width: 82vw; }
+}
+
+.loom-hero { background-image: linear-gradient(112deg, color-mix(in oklch, var(--card) 97%, var(--accent)) 0%, color-mix(in oklch, var(--card) 92%, transparent) 48%, color-mix(in oklch, var(--primary) 35%, transparent) 100%), url('/assets/story-loom-hero.png'); background-size: cover; background-position: center right; }
+
+.loom-status-dot--error { background: var(--destructive); box-shadow: 0 0 0 5px color-mix(in oklch, var(--destructive) 18%, transparent); }
+
+.cyliagen-graph-section { background: #102c29; border-color: color-mix(in oklch, var(--accent) 22%, var(--sidebar-border)); color: #f7f5ed; }
+.cyliagen-graph-heading { display: flex; align-items: flex-end; justify-content: space-between; gap: 1.5rem; padding: 1.5rem 1.5rem 0; }
+.cyliagen-graph-heading .loom-label { color: #b7d0c5; }
+.cyliagen-graph-badge { display: inline-flex; flex: none; align-items: center; gap: 0.55rem; border: 1px solid rgba(216,255,98,.26); border-radius: 999px; padding: 0.45rem 0.75rem; color: #d8ff62; font-size: 0.68rem; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; }
+.cyliagen-graph-badge span { width: .4rem; height: .4rem; border-radius: 999px; background: #d8ff62; box-shadow: 0 0 0 4px rgba(216,255,98,.12); }
+.cyliagen-graph-shell { position: relative; min-height: 28rem; }
+.cyliagen-graph-canvas { height: 30rem; cursor: grab; }
+.cyliagen-graph-canvas:active { cursor: grabbing; }
+.cyliagen-graph-overlay { position: absolute; left: 1.5rem; bottom: 1.25rem; display: grid; gap: .28rem; max-width: 16rem; pointer-events: none; }
+.cyliagen-graph-overlay strong { font-family: var(--font-display, Georgia, serif); font-size: 1.3rem; font-weight: 500; }
+.cyliagen-graph-overlay > span:last-child { color: #b7d0c5; font-size: .74rem; line-height: 1.45; }
+.cyliagen-graph-kicker { color: #d8ff62; font-size: .62rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; }
+@media (max-width: 640px) {
+  .cyliagen-graph-heading { align-items: flex-start; flex-direction: column; padding-inline: 1rem; }
+  .cyliagen-graph-canvas { height: 25rem; }
+  .cyliagen-graph-overlay { left: 1rem; }
+}

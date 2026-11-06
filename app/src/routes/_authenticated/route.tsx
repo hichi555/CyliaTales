@@ -13,6 +13,7 @@ import {
   Compass,
   GitBranch,
   Sparkles,
+  WandSparkles,
   ShieldCheck,
 } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
@@ -32,6 +33,7 @@ const NAV = [
       { to: "/studio", label: "Overview", icon: LayoutGrid },
       { to: "/stories/new", label: "New story", icon: PenTool },
       { to: "/branch-studio", label: "Branch Studio", icon: GitBranch },
+      { to: "/story-loom", label: "Cyliagen Studio", icon: WandSparkles },
       { to: "/world", label: "Story World", icon: Globe2 },
       { to: "/create", label: "Story formats", icon: Sparkles },
     ],
@@ -131,7 +133,7 @@ function StudioLayout() {
             <Logo />
           </div>
           <p className="hidden text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground md:block">
-            CyliaTales <span className="px-2 text-border">/</span> Story studio
+            Cyliagen Story <span className="px-2 text-border">/</span> Story studio
           </p>
           <div className="flex items-center gap-2">
             <div className="hidden items-center gap-2 rounded-full border bg-background/80 px-3 py-1.5 text-xs text-muted-foreground lg:flex">

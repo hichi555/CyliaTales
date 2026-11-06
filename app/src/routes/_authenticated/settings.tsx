@@ -30,10 +30,10 @@ export const Route = createFileRoute("/_authenticated/settings")({
   ssr: false,
   head: () => ({
     meta: [
-      { title: "Settings — CyliaTales" },
+      { title: "Settings — Cyliagen Story" },
       {
         name: "description",
-        content: "Shape how CyliaTales writes, reads and protects your stories.",
+        content: "Shape how Cyliagen Story writes, reads and protects your stories.",
       },
     ],
   }),
@@ -184,14 +184,14 @@ function SettingsPage() {
         .eq("id", user.id);
       if (!error) void qc.invalidateQueries({ queryKey: ["profile-preferences", user.id] });
     }
-    toast.success("Preferences restored to CyliaTales defaults.");
+    toast.success("Preferences restored to Cyliagen Story defaults.");
   }
   return (
     <div>
       <PageHeader
         eyebrow="Studio control"
         title="Settings that protect the story."
-        subtitle="Set the reading experience, creative defaults and safety posture once. CyliaTales carries them into the next production without hiding the decisions."
+        subtitle="Set the reading experience, creative defaults and safety posture once. Cyliagen Story carries them into the next production without hiding the decisions."
         actions={
           <Button onClick={save} disabled={saved}>
             {saved ? <Check /> : <Save />}
@@ -458,7 +458,7 @@ function SettingsPage() {
           </div>
           <div className="mt-5 border-t pt-5 text-sm leading-6 text-muted-foreground">
             <p className="flex gap-2">
-              <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-primary" /> CyliaTales keeps your
+              <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-primary" /> Cyliagen Story keeps your
               creative decisions visible and your story private until you choose otherwise.
             </p>
           </div>

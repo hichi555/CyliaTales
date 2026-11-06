@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import createGlobe from "cobe";
-import { useMotionValue, useSpring } from "framer-motion";
+import { useMotionValue, useSpring } from "motion/react";
 import { cn } from "@/lib/utils";
 
 export function Globe({ className }: { className?: string }) {

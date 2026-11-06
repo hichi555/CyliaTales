@@ -4,7 +4,7 @@ import { BookReader } from "@/components/BookReader";
 import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/explore/$id")({
-  head: () => ({ meta: [{ title: "Read story — CyliaTales" }] }),
+  head: () => ({ meta: [{ title: "Read story — Cyliagen Story" }] }),
   component: PublicReader,
 });
 function PublicReader() {

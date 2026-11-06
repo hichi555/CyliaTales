@@ -24,7 +24,7 @@ const configuredOrigin = (import.meta.env["VITE_APP_URL"] as string | undefined)
   "",
 );
 const shareImageUrl = configuredOrigin ? `${configuredOrigin}${heroShareImage}` : heroShareImage;
-const shareTitle = "CyliaTales — Make stories worth keeping";
+const shareTitle = "Cyliagen Story — Make stories worth keeping";
 const shareDescription =
   "A review-first story studio: writing, character direction, illustration, narration and motion, all in one calm workspace.";
 
@@ -49,7 +49,7 @@ function NotFoundComponent() {
         </p>
         <Button className="mt-8" asChild>
           <Link to="/">
-            Back to CyliaTales <ArrowRight />
+            Back to Cyliagen Story <ArrowRight />
           </Link>
         </Button>
       </div>
@@ -102,7 +102,7 @@ function ErrorComponent({ error, reset }: ErrorComponentProps) {
 const organizationJsonLd = JSON.stringify({
   "@context": "https://schema.org",
   "@type": "Organization",
-  name: "CyliaTales",
+  name: "Cyliagen Story",
   description: shareDescription,
   ...(configuredOrigin
     ? { url: configuredOrigin, logo: `${configuredOrigin}/cylia-mark.svg` }
@@ -116,14 +116,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { name: "theme-color", content: "#17484a" },
-      { title: "CyliaTales — Children’s Story Studio" },
+      { title: "Cyliagen Story — Children’s Story Studio" },
       {
         name: "description",
         content:
-          "Create illustrated children’s books, comics, read-aloud stories, and animated scenes with CyliaTales.",
+          "Create illustrated children’s books, comics, read-aloud stories, and animated scenes with Cyliagen Story.",
       },
       { property: "og:type", content: "website" },
-      { property: "og:site_name", content: "CyliaTales" },
+      { property: "og:site_name", content: "Cyliagen Story" },
       { property: "og:title", content: shareTitle },
       { property: "og:description", content: shareDescription },
       { property: "og:image", content: shareImageUrl },

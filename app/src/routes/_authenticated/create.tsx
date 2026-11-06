@@ -45,7 +45,7 @@ import printShareThumb from "@/assets/thumbnails/print-share.webp";
 export const Route = createFileRoute("/_authenticated/create")({
   head: () => ({
     meta: [
-      { title: "Story Production — CyliaTales" },
+      { title: "Story Production — Cyliagen Story" },
       { name: "robots", content: "noindex" },
       {
         name: "description",
@@ -212,12 +212,12 @@ function CreateHub() {
       const artifacts = [
         {
           artifact_type: "ebook",
-          provider: "CyliaTales story editor",
+          provider: "Cyliagen Story story editor",
           metadata: { stage: "manuscript-and-layout", order: 1 },
         },
         {
           artifact_type: "ebook_pdf",
-          provider: "CyliaTales book export",
+          provider: "Cyliagen Story book export",
           metadata: { stage: "print-and-share", order: 2 },
         },
         {
@@ -232,7 +232,7 @@ function CreateHub() {
         },
         {
           artifact_type: "scene",
-          provider: "CyliaTales scene pipeline",
+          provider: "Cyliagen Story scene pipeline",
           metadata: {
             stage: "approved-illustration-to-motion",
             order: 5,
@@ -241,7 +241,7 @@ function CreateHub() {
         },
         {
           artifact_type: "video",
-          provider: "CyliaTales scene pipeline",
+          provider: "Cyliagen Story scene pipeline",
           metadata: { stage: "final-animated-delivery", order: 6 },
         },
       ];
@@ -301,7 +301,7 @@ function CreateHub() {
   return (
     <div className="create-hub pb-10">
       <PageHeader
-        eyebrow="CyliaTales / Story production"
+        eyebrow="Cyliagen Story / Story production"
         title="One story, ready to read, hear, and watch."
         subtitle="Write and illustrate children’s books, shape comic panels, record a read-aloud, and direct story scenes without leaving the same creative studio."
         actions={
@@ -324,7 +324,7 @@ function CreateHub() {
         <div className="relative z-10 grid gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-end">
           <div>
             <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-accent">
-              <Orbit className="h-4 w-4" /> The CyliaTales story studio
+              <Orbit className="h-4 w-4" /> The Cyliagen Story story studio
             </p>
             <h2 className="mt-5 max-w-3xl text-3xl font-semibold leading-tight md:text-5xl">
               From a small idea to a story a child can read, hear, and remember.
@@ -578,7 +578,7 @@ function CreateHub() {
           Only configured providers appear ready.
         </h2>
         <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">
-          CyliaTales checks server-side credentials without exposing keys in the browser.
+          Cyliagen Story checks server-side credentials without exposing keys in the browser.
           Availability means a credential is present; a successful generation still depends on
           provider access, model availability, and account limits.
         </p>

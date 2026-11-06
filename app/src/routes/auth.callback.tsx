@@ -8,7 +8,7 @@ export const Route = createFileRoute("/auth/callback")({
     returnTo: typeof search["returnTo"] === "string" ? search["returnTo"] : "/studio",
   }),
   head: () => ({
-    meta: [{ title: "Finishing sign in — CyliaTales" }, { name: "robots", content: "noindex" }],
+    meta: [{ title: "Finishing sign in — Cyliagen Story" }, { name: "robots", content: "noindex" }],
   }),
   component: AuthCallback,
 });

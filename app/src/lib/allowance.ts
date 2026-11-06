@@ -21,7 +21,7 @@ export type MonthlyUsage = {
 export type AllowanceResult = { allowed: true } | { allowed: false; reason: string };
 
 /**
- * CyliaTales Lifetime's standing monthly allowance (plans.ts: "Every month,
+ * Cyliagen Story Lifetime's standing monthly allowance (plans.ts: "Every month,
  * for life: 2 books, 2 narrations, 1 motion scene"). Resets each calendar
  * month in UTC — see {@link currentAllowanceMonthKey} — with no rollover.
  */
@@ -72,7 +72,7 @@ export function checkMonthlyAllowance(
   if (planId === "free") {
     return {
       allowed: false,
-      reason: `The free plan doesn't include ${KIND_LABEL[kind]}. Upgrade to CyliaTales Lifetime to unlock it.`,
+      reason: `The free plan doesn't include ${KIND_LABEL[kind]}. Upgrade to Cyliagen Story Lifetime to unlock it.`,
     };
   }
 
@@ -100,7 +100,7 @@ export function checkFreePreviewAllowance(
   if (previewIllustrationsUsedForStory >= FREE_PREVIEW_ILLUSTRATIONS_PER_STORY) {
     return {
       allowed: false,
-      reason: `Each story gets ${FREE_PREVIEW_ILLUSTRATIONS_PER_STORY} free preview illustration. Upgrade to CyliaTales Lifetime for full book illustration.`,
+      reason: `Each story gets ${FREE_PREVIEW_ILLUSTRATIONS_PER_STORY} free preview illustration. Upgrade to Cyliagen Story Lifetime for full book illustration.`,
     };
   }
   return { allowed: true };

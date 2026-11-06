@@ -5,7 +5,7 @@ export function Logo({ className, light }: { className?: string; light?: boolean
   return (
     <Link
       to="/"
-      aria-label="CyliaTales home"
+      aria-label="Cyliagen Story home"
       className={cn("group flex items-center gap-2.5", className)}
     >
       <svg
@@ -16,19 +16,19 @@ export function Logo({ className, light }: { className?: string; light?: boolean
       >
         <path
           d="M29.5 10.8A14.2 14.2 0 1 0 29.5 29.2"
-          stroke="#17484a"
-          strokeWidth="4.3"
+          stroke={light ? "#f7f5ed" : "#163b35"}
+          strokeWidth="4.6"
           strokeLinecap="round"
         />
-        <path d="M30.1 17.8c1.25 1.25 1.25 3.15 0 4.4-1.25-1.25-1.25-3.15 0-4.4Z" fill="#e78c62" />
+        <path d="M30.1 17.8c1.25 1.25 1.25 3.15 0 4.4-1.25-1.25-1.25-3.15 0-4.4Z" fill="#d8ff62" />
       </svg>
       <span
         className={cn(
-          "font-sans text-[1.24rem] font-extrabold tracking-[-0.045em]",
-          light ? "text-sidebar-foreground" : "text-[#233437]",
+          "font-sans text-[1.24rem] font-extrabold tracking-[-0.05em]",
+          light ? "text-sidebar-foreground" : "text-[#163b35]",
         )}
       >
-        CyliaTales
+        Cyliagen Story
       </span>
     </Link>
   );

@@ -24,13 +24,13 @@ import { Checkbox } from "@/components/ui/checkbox";
 export const Route = createFileRoute("/_authenticated/voices")({
   head: () => ({
     meta: [
-      { title: "Voices — CyliaTales" },
+      { title: "Voices — Cyliagen Story" },
       { name: "robots", content: "noindex" },
       {
         name: "description",
         content: "Explore categorized narrator voices for your children’s books.",
       },
-      { property: "og:title", content: "Voices — CyliaTales" },
+      { property: "og:title", content: "Voices — Cyliagen Story" },
       {
         property: "og:description",
         content: "Explore categorized narrator voices for your children’s books.",
