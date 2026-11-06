@@ -5,7 +5,7 @@ export function PrintBook({ title, pages }: { title: string; pages: Tables<"stor
     <div className="print-book">
       <section className="print-cover">
         <h1>{title}</h1>
-        <p>CyliaTales</p>
+        <p>Cyliagen Story</p>
       </section>
       {pages.map((page) => (
         <PrintPage key={page.id} page={page} />

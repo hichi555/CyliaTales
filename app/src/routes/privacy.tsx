@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Logo } from "@/components/Logo";
 
 export const Route = createFileRoute("/privacy")({
-  head: () => ({ meta: [{ title: "Privacy — CyliaTales" }] }),
+  head: () => ({ meta: [{ title: "Privacy — Cyliagen Story" }] }),
   component: Privacy,
 });
 
@@ -48,7 +48,7 @@ function Privacy() {
           <section>
             <h2 className="text-base font-semibold">Children's data</h2>
             <p className="mt-2 text-muted-foreground">
-              CyliaTales accounts belong to an adult. We don't knowingly collect personal
+              Cyliagen Story accounts belong to an adult. We don't knowingly collect personal
               information directly from children. Details a parent chooses to include about a child
               — a name used in a story, a reading age — are entered and controlled by the adult
               account holder.

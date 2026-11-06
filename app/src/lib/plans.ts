@@ -1,6 +1,6 @@
-// CyliaTales pricing. Unlike ReadKidz's monthly-credit subscriptions
+// Cyliagen Story pricing. Unlike ReadKidz's monthly-credit subscriptions
 // (Personal/Pro/Mega/Max, $10-$99 EVERY month, credits expire unused),
-// CyliaTales is paid once and keeps working: a monthly production
+// Cyliagen Story is paid once and keeps working: a monthly production
 // allowance included for life, reset monthly, never billed again.
 // The allowance is capped — not unlimited — because every page, narration
 // and motion scene is generated individually, not templated; the cap is
@@ -45,7 +45,7 @@ export const PLANS: Plan[] = [
   },
   {
     id: "lifetime",
-    name: "CyliaTales Lifetime",
+    name: "Cyliagen Story Lifetime",
     price: "$89",
     cadence: "one time — pay once, keep every month, forever",
     tagline:

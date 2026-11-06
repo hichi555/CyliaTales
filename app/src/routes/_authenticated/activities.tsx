@@ -12,13 +12,13 @@ import { generateLearningActivities } from "@/lib/studio.functions";
 export const Route = createFileRoute("/_authenticated/activities")({
   head: () => ({
     meta: [
-      { title: "Classroom activities — CyliaTales" },
+      { title: "Classroom activities — Cyliagen Story" },
       {
         name: "description",
         content:
           "Turn any finished story into age-appropriate comprehension questions and vocabulary activities.",
       },
-      { property: "og:title", content: "Classroom activities — CyliaTales" },
+      { property: "og:title", content: "Classroom activities — Cyliagen Story" },
       {
         property: "og:description",
         content: "Comprehension questions and vocabulary activities for parents and teachers.",

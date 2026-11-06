@@ -1334,7 +1334,7 @@
 
 
 /* --------------------------------------------------------------------------
-   CyliaTales Editorial Signal refresh
+   Cyliagen Story Editorial Signal refresh
    A deliberate visual layer for the product: ink, paper, and one signal color.
    -------------------------------------------------------------------------- */
 :root {
@@ -1434,7 +1434,7 @@ body h2 { letter-spacing: -0.035em; }
 }
 
 
-/* Story Loom: a connected narrative canvas, not a generic AI prompt screen. */
+/* Cyliagen Studio: a connected narrative canvas, not a generic AI prompt screen. */
 .story-loom-page { max-width: 1480px; margin-inline: auto; }
 .loom-hero { background: linear-gradient(118deg, color-mix(in oklch, var(--card) 90%, var(--accent)) 0%, var(--card) 54%, color-mix(in oklch, var(--card) 90%, var(--primary)) 100%); }
 .loom-hero::after { content: ""; position: absolute; width: 18rem; height: 18rem; right: 8%; bottom: -12rem; border-radius: 999px; background: color-mix(in oklch, var(--accent) 24%, transparent); filter: blur(60px); }
@@ -1481,3 +1481,5 @@ body h2 { letter-spacing: -0.035em; }
 }
 
 .loom-hero { background-image: linear-gradient(112deg, color-mix(in oklch, var(--card) 97%, var(--accent)) 0%, color-mix(in oklch, var(--card) 92%, transparent) 48%, color-mix(in oklch, var(--primary) 35%, transparent) 100%), url('/assets/story-loom-hero.png'); background-size: cover; background-position: center right; }
+
+.loom-status-dot--error { background: var(--destructive); box-shadow: 0 0 0 5px color-mix(in oklch, var(--destructive) 18%, transparent); }

@@ -7,8 +7,8 @@ import { useMediaUrl } from "@/lib/media";
 export const Route = createFileRoute("/explore")({
   head: () => ({
     meta: [
-      { title: "Explore stories — CyliaTales" },
-      { name: "description", content: "Read published story worlds created in CyliaTales." },
+      { title: "Explore stories — Cyliagen Story" },
+      { name: "description", content: "Read published story worlds created in Cyliagen Story." },
     ],
   }),
   component: Explore,
@@ -30,7 +30,7 @@ function Explore() {
   return (
     <main className="mx-auto min-h-screen max-w-7xl px-6 py-12 lg:px-8">
       <Link to="/" className="text-sm text-muted-foreground hover:text-foreground">
-        ← CyliaTales
+        ← Cyliagen Story
       </Link>
       <div className="mt-8 max-w-2xl">
         <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">
@@ -40,7 +40,7 @@ function Explore() {
           Stories with a world behind them.
         </h1>
         <p className="mt-5 text-lg leading-8 text-muted-foreground">
-          Read published books from CyliaTales creators. Every story stays connected to its approved
+          Read published books from Cyliagen Story creators. Every story stays connected to its approved
           cast, visual direction and reading experience.
         </p>
       </div>
@@ -51,7 +51,7 @@ function Explore() {
           <BookOpen className="mx-auto h-8 w-8 text-primary" />
           <h2 className="mt-4 text-xl font-semibold">The shelf is waiting for its first story.</h2>
           <p className="mt-2 text-muted-foreground">
-            Publish a finished CyliaTales book to make it available here.
+            Publish a finished Cyliagen Story book to make it available here.
           </p>
         </div>
       ) : (

@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   ArrowRight,
   Check,
@@ -20,11 +20,13 @@ import { MagicCard } from "@/components/magicui/magic-card";
 import { DotPattern } from "@/components/magicui/dot-pattern";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { useAuth } from "@/hooks/use-auth";
+import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/_authenticated/story-loom")({
   head: () => ({
     meta: [
-      { title: "Story Loom — CyliaTales" },
+      { title: "Cyliagen Studio — Cyliagen Story" },
       { name: "robots", content: "noindex" },
       {
         name: "description",
@@ -99,12 +101,82 @@ const generatedNodes: StoryNode[] = [
 ];
 
 function StoryLoom() {
+  const { user } = useAuth();
   const [premise, setPremise] = useState(
     "A child finds a glowing seed inside a library book and follows it into a world that has forgotten how to come home.",
   );
   const [nodes, setNodes] = useState(starterNodes);
   const [activeId, setActiveId] = useState("origin");
   const [isGenerating, setIsGenerating] = useState(false);
+  const [projectId, setProjectId] = useState<string | null>(null);
+  const [saveState, setSaveState] = useState<"loading" | "saving" | "saved" | "offline" | "error">("loading");
+  const hydrated = useRef(false);
+  const saveTimer = useRef<number | null>(null);
+
+  useEffect(() => {
+    if (!user) {
+      setSaveState("offline");
+      return;
+    }
+    const userId = user.id;
+    let cancelled = false;
+    async function loadDraft() {
+      const { data, error } = await supabase
+        .from("creation_projects")
+        .select("id,brief,selected_models")
+        .eq("user_id", userId)
+        .eq("status", "planning")
+        .order("updated_at", { ascending: false })
+        .limit(12);
+      if (cancelled) return;
+      const draft = (data ?? []).find((item) => {
+        const metadata = item.selected_models as { surface?: string } | null;
+        return metadata?.surface === "cyliagen-studio";
+      });
+      if (draft) {
+        const metadata = draft.selected_models as { nodes?: StoryNode[]; activeId?: string } | null;
+        setProjectId(draft.id);
+        if (draft.brief) setPremise(draft.brief);
+        if (metadata?.nodes?.length) setNodes(metadata.nodes);
+        if (metadata?.activeId) setActiveId(metadata.activeId);
+      }
+      hydrated.current = true;
+      setSaveState(error ? "error" : "saved");
+    }
+    void loadDraft();
+    return () => {
+      cancelled = true;
+    };
+  }, [user]);
+
+  useEffect(() => {
+    if (!user || !hydrated.current) return;
+    if (saveTimer.current) window.clearTimeout(saveTimer.current);
+    setSaveState("saving");
+    saveTimer.current = window.setTimeout(async () => {
+      const selectedModels = { surface: "cyliagen-studio", nodes, activeId };
+      const payload = {
+        title: premise.trim().slice(0, 72) || "Untitled Cyliagen story",
+        brief: premise.trim() || "Untitled Cyliagen story",
+        creation_mode: "ebook",
+        selected_models: selectedModels,
+        status: "planning",
+        user_id: user.id,
+      };
+      const result = projectId
+        ? await supabase.from("creation_projects").update(payload).eq("id", projectId).select("id").single()
+        : await supabase.from("creation_projects").insert(payload).select("id").single();
+      if (result.error) {
+        setSaveState("error");
+      } else {
+        setProjectId(result.data.id);
+        setSaveState("saved");
+      }
+    }, 850);
+    return () => {
+      if (saveTimer.current) window.clearTimeout(saveTimer.current);
+    };
+  }, [activeId, nodes, premise, projectId, user]);
 
   function generatePath() {
     if (isGenerating) return;
@@ -131,13 +203,13 @@ function StoryLoom() {
         <div className="relative z-10 grid gap-8 p-6 md:grid-cols-[1.1fr_0.9fr] md:p-9">
           <div>
             <div className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-primary">
-              <span className="loom-pulse" /> Story Loom · AI narrative direction
+              <span className="loom-pulse" /> Cyliagen Studio · AI narrative direction
             </div>
             <h1 className="mt-4 max-w-2xl text-4xl font-semibold leading-[0.98] tracking-[-0.045em] md:text-6xl">
               Start with a spark. Leave with a story you can direct.
             </h1>
             <p className="mt-5 max-w-xl text-base leading-7 text-muted-foreground">
-              CyliaTales turns a loose premise into a living map of beats, choices, and visual handoffs. You stay in the loop; the machine does the heavy branching.
+              Cyliagen Story turns a loose premise into a living map of beats, choices, and visual handoffs. You stay in the loop; the machine does the heavy branching.
             </p>
             <div className="mt-7 flex flex-wrap gap-3">
               <Button onClick={generatePath} disabled={isGenerating} size="lg">
@@ -171,7 +243,8 @@ function StoryLoom() {
           <h2 className="mt-2 text-2xl font-semibold tracking-[-0.03em]">A map you can actually make decisions inside.</h2>
         </div>
         <div className="flex items-center gap-2 text-xs text-muted-foreground">
-          <span className="loom-status-dot" /> Autosaving direction
+          <span className={`loom-status-dot ${saveState === "error" ? "loom-status-dot--error" : ""}`} />
+          {saveState === "saving" ? "Saving to cloud…" : saveState === "saved" ? "Saved to cloud" : saveState === "offline" ? "Sign in to sync" : saveState === "error" ? "Cloud save needs attention" : "Loading cloud draft…"}
           <span className="px-1 text-border">/</span>
           {nodes.length} story nodes
         </div>

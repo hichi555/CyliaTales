@@ -29,7 +29,7 @@ export const Route = createFileRoute("/_authenticated/world")({
   ssr: false,
   head: () => ({
     meta: [
-      { title: "Story World — CyliaTales" },
+      { title: "Story World — Cyliagen Story" },
       { name: "robots", content: "noindex" },
       {
         name: "description",
@@ -283,7 +283,7 @@ function StoryWorld() {
             <Plus /> Add {kind}
           </Button>
           <p className="mt-4 text-xs leading-5 text-muted-foreground">
-            Saved to your CyliaTales account as a continuity note. It will be carried into the next
+            Saved to your Cyliagen Story account as a continuity note. It will be carried into the next
             production brief.
           </p>
         </form>

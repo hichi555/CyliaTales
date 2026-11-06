@@ -5,7 +5,7 @@ export function Logo({ className, light }: { className?: string; light?: boolean
   return (
     <Link
       to="/"
-      aria-label="CyliaTales home"
+      aria-label="Cyliagen Story home"
       className={cn("group flex items-center gap-2.5", className)}
     >
       <svg
@@ -28,7 +28,7 @@ export function Logo({ className, light }: { className?: string; light?: boolean
           light ? "text-sidebar-foreground" : "text-[#163b35]",
         )}
       >
-        CyliaTales
+        Cyliagen Story
       </span>
     </Link>
   );

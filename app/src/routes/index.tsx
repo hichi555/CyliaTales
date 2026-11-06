@@ -22,20 +22,20 @@ import { ART_DIRECTION_BOARDS } from "@/lib/art-direction";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "CyliaTales — A story production studio for children" },
+      { title: "Cyliagen Story — A story production studio for children" },
       {
         name: "description",
         content:
           "Create original children's books, consistent characters, narrated read-alouds and animated storyboards in one review-first studio.",
       },
-      { property: "og:title", content: "CyliaTales — Stories with a production desk" },
+      { property: "og:title", content: "Cyliagen Story — Stories with a production desk" },
       {
         property: "og:description",
         content: "Write, direct, illustrate, narrate and share original stories for children.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "CyliaTales — Stories with a production desk" },
+      { name: "twitter:title", content: "Cyliagen Story — Stories with a production desk" },
       {
         name: "twitter:description",
         content: "Write, direct, illustrate, narrate and share original stories for children.",
@@ -282,7 +282,7 @@ function Landing() {
                 You decide what becomes real.
               </h2>
               <p className="mt-5 leading-7 text-muted-foreground">
-                CyliaTales is designed around approval, not surprise. Draft the direction, inspect
+                Cyliagen Story is designed around approval, not surprise. Draft the direction, inspect
                 the result, then keep, refine or replace the part that needs work.
               </p>
               <Button className="mt-8" variant="outline" asChild>
@@ -335,7 +335,7 @@ function Landing() {
                   One direction. Every finished form.
                 </h2>
                 <p className="mt-5 leading-7 text-muted-foreground">
-                  CyliaTales keeps the visual language, cast and emotional center intact while you
+                  Cyliagen Story keeps the visual language, cast and emotional center intact while you
                   move from a quiet page to a narrated read-aloud, a moving scene or a thoughtful
                   classroom extension.
                 </p>
@@ -462,7 +462,7 @@ function Landing() {
             </Link>
           </nav>
           <p>
-            © {new Date().getFullYear()} CyliaTales. Original stories, original art, original
+            © {new Date().getFullYear()} Cyliagen Story. Original stories, original art, original
             voices.
           </p>
         </div>

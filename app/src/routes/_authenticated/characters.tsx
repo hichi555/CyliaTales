@@ -19,13 +19,13 @@ import { Label } from "@/components/ui/label";
 export const Route = createFileRoute("/_authenticated/characters")({
   head: () => ({
     meta: [
-      { title: "Characters — CyliaTales" },
+      { title: "Characters — Cyliagen Story" },
       { name: "robots", content: "noindex" },
       {
         name: "description",
         content: "Build a reusable cast with defined appearance, outfits and color palettes.",
       },
-      { property: "og:title", content: "Characters — CyliaTales" },
+      { property: "og:title", content: "Characters — Cyliagen Story" },
       {
         property: "og:description",
         content: "Build a reusable cast with defined appearance, outfits and color palettes.",

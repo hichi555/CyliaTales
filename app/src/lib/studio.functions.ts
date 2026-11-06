@@ -819,7 +819,7 @@ export const generateStoryBranches = createServerFn({ method: "POST" })
       ),
       continuityNote: z.string().max(240),
     });
-    const prompt = `You are CyliaTales' senior interactive story director. Create a small, emotionally meaningful branching moment for a children's story, not a generic choose-your-own-adventure. Target age: ${data.ageRange}. Atmosphere: ${data.atmosphere}.
+    const prompt = `You are Cyliagen Story' senior interactive story director. Create a small, emotionally meaningful branching moment for a children's story, not a generic choose-your-own-adventure. Target age: ${data.ageRange}. Atmosphere: ${data.atmosphere}.
 Premise or current moment:
 ${data.premise}
 

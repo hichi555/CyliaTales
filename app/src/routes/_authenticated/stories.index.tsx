@@ -14,13 +14,13 @@ import printShareThumb from "@/assets/thumbnails/print-share.webp";
 export const Route = createFileRoute("/_authenticated/stories/")({
   head: () => ({
     meta: [
-      { title: "My books — CyliaTales" },
+      { title: "My books — Cyliagen Story" },
       { name: "robots", content: "noindex" },
       {
         name: "description",
         content: "Your private library of original illustrated children’s books.",
       },
-      { property: "og:title", content: "My books — CyliaTales" },
+      { property: "og:title", content: "My books — Cyliagen Story" },
       {
         property: "og:description",
         content: "Your private library of original illustrated children’s books.",

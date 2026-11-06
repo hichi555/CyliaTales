@@ -28,16 +28,16 @@ import type { Tables } from "@/integrations/supabase/types";
 export const Route = createFileRoute("/_authenticated/labs")({
   head: () => ({
     meta: [
-      { title: "Production Desk — CyliaTales" },
+      { title: "Production Desk — Cyliagen Story" },
       { name: "robots", content: "noindex" },
       {
         name: "description",
-        content: "Review, direct and export your CyliaTales story production.",
+        content: "Review, direct and export your Cyliagen Story story production.",
       },
-      { property: "og:title", content: "Production Desk — CyliaTales" },
+      { property: "og:title", content: "Production Desk — Cyliagen Story" },
       {
         property: "og:description",
-        content: "Review, direct and export your CyliaTales story production.",
+        content: "Review, direct and export your Cyliagen Story story production.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -312,7 +312,7 @@ function Labs() {
             </div>
             <div className="border bg-primary p-6 text-primary-foreground">
               <Sparkles className="h-6 w-6 text-accent" />
-              <h2 className="mt-5 text-xl font-semibold">CyliaTales direction standard</h2>
+              <h2 className="mt-5 text-xl font-semibold">Cyliagen Story direction standard</h2>
               <p className="mt-3 text-sm leading-6 text-primary-foreground/80">
                 Lock the story plan, cast and visual language first. Then regenerate only the page
                 or shot that needs attention—approved work stays untouched.

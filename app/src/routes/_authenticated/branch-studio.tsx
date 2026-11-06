@@ -26,11 +26,11 @@ import { useAuth } from "@/hooks/use-auth";
 export const Route = createFileRoute("/_authenticated/branch-studio")({
   head: () => ({
     meta: [
-      { title: "Branch Studio — CyliaTales" },
+      { title: "Branch Studio — Cyliagen Story" },
       { name: "robots", content: "noindex" },
       {
         name: "description",
-        content: "Direct meaningful interactive story choices with CyliaTales AI story direction.",
+        content: "Direct meaningful interactive story choices with Cyliagen Story AI story direction.",
       },
     ],
   }),
@@ -178,7 +178,7 @@ function BranchStudio() {
               Not a quiz. A story with consequences.
             </h2>
             <p className="mt-5 max-w-xl text-sm leading-7 text-primary-foreground/75 md:text-base">
-              CyliaTales looks for choices that reveal character, preserve continuity, and change what
+              Cyliagen Story looks for choices that reveal character, preserve continuity, and change what
               the reader feels next — not three versions of the same safe answer.
             </p>
             <div className="mt-7 flex flex-wrap gap-3 text-xs text-primary-foreground/70">

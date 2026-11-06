@@ -36,11 +36,11 @@ import { AuditCompliancePanel } from "@/components/AuditCompliancePanel";
 export const Route = createFileRoute("/_authenticated/studio")({
   head: () => ({
     meta: [
-      { title: "World Studio — CyliaTales" },
+      { title: "World Studio — Cyliagen Story" },
       { name: "robots", content: "noindex" },
       {
         name: "description",
-        content: "Build one connected CyliaTales story world across books, voices and motion.",
+        content: "Build one connected Cyliagen Story story world across books, voices and motion.",
       },
     ],
   }),
@@ -71,7 +71,7 @@ function Studio() {
     {
       to: "/story-loom",
       icon: WandSparkles,
-      title: "Story Loom",
+      title: "Cyliagen Studio",
       body: "Turn a premise into connected beats, choices and scene-ready direction.",
     },
     {
@@ -104,7 +104,7 @@ function Studio() {
       <PageHeader
         eyebrow="World Studio"
         title="One world. Many ways to tell it."
-        subtitle="CyliaTales keeps your cast, voice and visual direction connected while you move from manuscript to read-aloud book to moving scene."
+        subtitle="Cyliagen Story keeps your cast, voice and visual direction connected while you move from manuscript to read-aloud book to moving scene."
         actions={
           <Button asChild>
             <Link to="/stories/new">New story</Link>
@@ -206,7 +206,7 @@ function Studio() {
         <div className="flex flex-wrap items-start justify-between gap-5">
           <div>
             <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-primary">
-              <Globe2 className="h-4 w-4" /> The CyliaTales world layer
+              <Globe2 className="h-4 w-4" /> The Cyliagen Story world layer
             </p>
             <h2 className="mt-3 text-2xl font-semibold">Your story is more than one output.</h2>
             <p className="mt-2 max-w-2xl leading-7 text-muted-foreground">
