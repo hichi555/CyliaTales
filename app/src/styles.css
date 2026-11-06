@@ -1483,3 +1483,21 @@ body h2 { letter-spacing: -0.035em; }
 .loom-hero { background-image: linear-gradient(112deg, color-mix(in oklch, var(--card) 97%, var(--accent)) 0%, color-mix(in oklch, var(--card) 92%, transparent) 48%, color-mix(in oklch, var(--primary) 35%, transparent) 100%), url('/assets/story-loom-hero.png'); background-size: cover; background-position: center right; }
 
 .loom-status-dot--error { background: var(--destructive); box-shadow: 0 0 0 5px color-mix(in oklch, var(--destructive) 18%, transparent); }
+
+.cyliagen-graph-section { background: #102c29; border-color: color-mix(in oklch, var(--accent) 22%, var(--sidebar-border)); color: #f7f5ed; }
+.cyliagen-graph-heading { display: flex; align-items: flex-end; justify-content: space-between; gap: 1.5rem; padding: 1.5rem 1.5rem 0; }
+.cyliagen-graph-heading .loom-label { color: #b7d0c5; }
+.cyliagen-graph-badge { display: inline-flex; flex: none; align-items: center; gap: 0.55rem; border: 1px solid rgba(216,255,98,.26); border-radius: 999px; padding: 0.45rem 0.75rem; color: #d8ff62; font-size: 0.68rem; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; }
+.cyliagen-graph-badge span { width: .4rem; height: .4rem; border-radius: 999px; background: #d8ff62; box-shadow: 0 0 0 4px rgba(216,255,98,.12); }
+.cyliagen-graph-shell { position: relative; min-height: 28rem; }
+.cyliagen-graph-canvas { height: 30rem; cursor: grab; }
+.cyliagen-graph-canvas:active { cursor: grabbing; }
+.cyliagen-graph-overlay { position: absolute; left: 1.5rem; bottom: 1.25rem; display: grid; gap: .28rem; max-width: 16rem; pointer-events: none; }
+.cyliagen-graph-overlay strong { font-family: var(--font-display, Georgia, serif); font-size: 1.3rem; font-weight: 500; }
+.cyliagen-graph-overlay > span:last-child { color: #b7d0c5; font-size: .74rem; line-height: 1.45; }
+.cyliagen-graph-kicker { color: #d8ff62; font-size: .62rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; }
+@media (max-width: 640px) {
+  .cyliagen-graph-heading { align-items: flex-start; flex-direction: column; padding-inline: 1rem; }
+  .cyliagen-graph-canvas { height: 25rem; }
+  .cyliagen-graph-overlay { left: 1rem; }
+}

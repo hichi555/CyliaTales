@@ -16,6 +16,7 @@ import {
 import { Logo } from "@/components/Logo";
 import { Reveal } from "@/components/Reveal";
 import { BorderBeam } from "@/components/magicui/border-beam";
+import { MagicCard } from "@/components/magicui/magic-card";
 import { Button } from "@/components/ui/button";
 import { ART_DIRECTION_BOARDS } from "@/lib/art-direction";
 
@@ -152,31 +153,32 @@ function Landing() {
             <div className="relative z-10">
               <Reveal>
                 <p className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-card/80 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-primary shadow-sm">
-                  <span className="h-1.5 w-1.5 rounded-full bg-accent" /> A story production studio
+                  <span className="h-1.5 w-1.5 rounded-full bg-accent" /> The AI studio for stories with a point of view
                 </p>
               </Reveal>
               <Reveal delay={80}>
                 <h1 className="mt-7 max-w-2xl text-5xl font-semibold leading-[0.98] tracking-[-0.03em] text-foreground md:text-7xl">
-                  Make a story your family keeps{" "}
-                  <em className="font-display font-normal text-primary">keeping.</em>
+                  From one brave idea to a story people want to{" "}
+                  <em className="font-display font-normal text-primary">revisit.</em>
                 </h1>
               </Reveal>
               <Reveal delay={160}>
                 <p className="mt-7 max-w-xl text-lg leading-8 text-muted-foreground">
-                  A focused studio for the part that matters: turning a small idea into a story with
-                  a voice, a world and a reason to come back to it. Review every meaningful step.
+                  Cyliagen Story turns a prompt, memory or sketch into a directed visual world — with
+                  consistent characters, cinematic storyboards and a human checkpoint before anything
+                  becomes final.
                 </p>
               </Reveal>
               <Reveal delay={240}>
                 <div className="mt-9 flex flex-wrap gap-3">
                   <Button size="lg" className="shadow-[0_12px_28px_-16px_oklch(0.27_0.045_166/0.8)]" asChild>
                     <Link to="/auth">
-                      Create your first story <ArrowRight />
+                      Build your first world <ArrowRight />
                     </Link>
                   </Button>
                   <Button size="lg" variant="outline" asChild>
-                    <a href="#workspaces">
-                      <Play /> See the studio
+                      <a href="#workflow">
+                      <Play /> See how it works
                     </a>
                   </Button>
                 </div>
@@ -200,11 +202,12 @@ function Landing() {
                 className="absolute -inset-6 rounded-[3rem] bg-accent/10 blur-3xl"
                 aria-hidden="true"
               />
-              <figure className="relative overflow-hidden rounded-[1.75rem] border border-white/70 bg-card p-2 shadow-[0_24px_80px_-28px_oklch(0.22_0.03_250/0.45)]">
-                <BorderBeam size={120} duration={11} colorFrom="var(--accent)" colorTo="var(--primary)" />
-                <img
-                  src="/assets/cyliatales-hero-showcase.jpg"
-                  alt="A child and a lantern fox discover story worlds beneath a starry sky"
+              <MagicCard className="relative overflow-hidden rounded-[1.75rem] border border-white/70 bg-card p-2 shadow-[0_24px_80px_-28px_oklch(0.22_0.03_250/0.45)]">
+                <figure>
+                  <BorderBeam size={120} duration={11} colorFrom="var(--accent)" colorTo="var(--primary)" />
+                    <img
+                  src="/assets/cyliagen-story-hero.png"
+                  alt="A luminous constellation of connected story worlds and narrative beats"
                   width={2560}
                   height={1440}
                   className="aspect-[4/3] w-full rounded-[1.25rem] object-cover"
@@ -212,15 +215,16 @@ function Landing() {
                 <figcaption className="relative z-10 flex items-center justify-between gap-4 bg-card px-4 py-4">
                   <div>
                     <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
-                      A finished story, in progress
+                      One brief · many finished forms
                     </p>
-                    <p className="mt-1 font-display text-lg">Fern and the Lantern Fox</p>
+                    <p className="mt-1 font-display text-lg">Your world, with continuity built in</p>
                   </div>
                   <span className="rounded-full bg-secondary px-3 py-1 text-xs font-semibold text-primary">
-                    4 stages reviewed
+                    4 stages · 1 creative thread
                   </span>
                 </figcaption>
-              </figure>
+                </figure>
+              </MagicCard>
               <div className="absolute -top-5 -left-4 hidden rounded-2xl border border-border bg-card px-4 py-3 shadow-soft sm:block">
                 <div className="flex items-center gap-2 text-xs font-semibold text-primary">
                   <AudioLines className="h-4 w-4" /> Narration ready

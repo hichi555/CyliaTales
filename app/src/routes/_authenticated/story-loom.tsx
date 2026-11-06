@@ -20,6 +20,7 @@ import { MagicCard } from "@/components/magicui/magic-card";
 import { DotPattern } from "@/components/magicui/dot-pattern";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { CyliagenStoryGraph } from "@/components/CyliagenStoryGraph";
 import { useAuth } from "@/hooks/use-auth";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -271,6 +272,18 @@ function StoryLoom() {
           ))}
           <button type="button" className="loom-add-node" onClick={generatePath}><Plus /><span><strong>Ask the Loom</strong><small>Generate a connected next beat</small></span></button>
         </div>
+      </section>
+
+      <section className="cyliagen-graph-section mt-5 overflow-hidden rounded-3xl border shadow-soft" aria-labelledby="graph-title">
+        <div className="cyliagen-graph-heading">
+          <div>
+            <p className="loom-label">Three-dimensional direction layer</p>
+            <h2 id="graph-title" className="mt-2 text-2xl font-semibold tracking-[-0.03em]">See the story as a world, not a list.</h2>
+            <p className="mt-2 max-w-xl text-sm leading-6 text-muted-foreground">Orbit the narrative, inspect the emotional turns, and spot where a new branch strengthens the whole arc before you render a page.</p>
+          </div>
+          <div className="cyliagen-graph-badge"><span /> 3D continuity map</div>
+        </div>
+        <CyliagenStoryGraph />
       </section>
 
       <BentoGrid className="mt-5">
